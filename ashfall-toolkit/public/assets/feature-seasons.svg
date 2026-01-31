@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c0f14"/>
+      <stop offset="1" stop-color="#07080b"/>
+    </linearGradient>
+    <radialGradient id="gold" cx="50%" cy="25%" r="80%">
+      <stop offset="0" stop-color="#d7b46a" stop-opacity="0.20"/>
+      <stop offset="0.55" stop-color="#d7b46a" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#d7b46a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <rect width="960" height="540" fill="url(#gold)"/>
+
+  <!-- pass track -->
+  <g opacity="0.9">
+    <rect x="120" y="160" width="520" height="60" rx="18" fill="#111723" stroke="#2a3550"/>
+    <rect x="140" y="180" width="160" height="20" rx="10" fill="#0c0f14"/>
+    <rect x="310" y="180" width="160" height="20" rx="10" fill="#0c0f14"/>
+    <rect x="480" y="180" width="140" height="20" rx="10" fill="#0c0f14"/>
+    <circle cx="320" cy="190" r="6" fill="#d7b46a"/>
+  </g>
+
+  <!-- rank ladder -->
+  <g opacity="0.92">
+    <rect x="690" y="130" width="170" height="280" rx="22" fill="#111723" stroke="#2a3550"/>
+    <rect x="714" y="160" width="120" height="18" rx="9" fill="#0c0f14"/>
+    <rect x="714" y="195" width="132" height="18" rx="9" fill="#0c0f14"/>
+    <rect x="714" y="230" width="110" height="18" rx="9" fill="#0c0f14"/>
+    <rect x="714" y="265" width="142" height="18" rx="9" fill="#0c0f14"/>
+    <rect x="714" y="300" width="126" height="18" rx="9" fill="#0c0f14"/>
+  </g>
+</svg>
+

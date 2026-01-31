@@ -1,0 +1,1387 @@
+Extracted text from: Game-Context.pdf
+Project: Ashfall
+
+NOTE (direction update):
+- This file is a raw extract from earlier brainstorming when Ashfall was framed as a “survival RTS with weekly resets.”
+- The current direction is **hero-first survival action RPG** (Valheim x WoW): quick movement, splashy abilities, mounted exploration, WoW-like combat; **base building is secondary**.
+- See `Ashfall-Game-Design-Document.md` and `Ashfall-Product-Requirements-Document.md` for the updated source-of-truth framing.
+
+I want to create a game PRD that combines Valheim, RUST,
+RTS games but is in the style of a multiplayer survival RTS. I
+want it to be non-persistent and take place over the
+course of a week.
+Love this concept — a week-long, non-persistent survival RTS is a really fresh hybrid. Let’s
+structure this like a real PRD draft you could hand to a team. I’ll write it in a professional
+format but keep it high-level enough to iterate.
+📄 Product Requirements Document
+Project Codename: Ashfall
+1. Vision Statement
+Ashfall is a multiplayer survival RTS where small teams of players cooperate and compete
+over the course of a 7-day world cycle. Players gather resources, build fortifications,
+command units, and survive escalating environmental and PvP threats. At the end of the
+cycle, the world collapses, scores are tallied, and a new world begins.
+The game blends:
+Valheim → exploration + survival crafting
+RUST → PvP tension + territory control
+RTS → base management + unit command
+Seasonal roguelite loop → weekly reset with meta progression
+The core fantasy:
+2. Core Pillars
+“Lead a fragile colony through a hostile world that will inevitably end — your job is to
+survive long enough to matter.”
+
+-- 1 of 50 --
+
+1. Time-Bound Survival
+Every match lasts exactly 7 real-world days
+No persistence of bases or territory after reset
+Creates urgency and strategic pacing
+2. Player-as-Commander
+Players are both characters and commanders
+Direct action + RTS-style indirect control
+Hybrid of survival + macro strategy
+3. Escalation Arc
+World becomes more hostile each day
+Environmental threats + PvE factions + PvP pressure
+Predictable arc, unpredictable outcomes
+4. Temporary Power, Permanent Legacy
+Weekly worlds reset
+Account-level progression persists
+Rewards experimentation and risk-taking
+3. Target Experience
+Session Length
+Short sessions: 30–90 minutes
+Long sessions: 3+ hours (optional)
+Drop-in, drop-out friendly
+Player Count
+40–80 players per world shard
+Organized into:
+Solo
+Small factions (2–6 players)
+Perspective
+Third-person character control
+RTS overlay for base/unit management
+
+-- 2 of 50 --
+
+4. Core Gameplay Loop
+Moment-to-Moment Loop
+1. Explore world
+2. Gather resources
+3. Build structures
+4. Recruit AI workers/soldiers
+5. Expand territory
+6. Defend against threats
+7. Raid rivals
+8. Prepare for next escalation phase
+Weekly Macro Loop
+Day 1–2: Establishment
+Scramble for land
+Early base building
+Minimal PvP
+Day 3–4: Expansion
+Faction conflicts begin
+Resource scarcity emerges
+PvE factions become aggressive
+Day 5–6: Collapse
+Cataclysmic world events
+High-tier monsters
+Large-scale wars
+Day 7: Final Stand
+World-ending storm/event
+Scoring phase
+Last battles determine ranking
+World resets → New map → New meta
+5. Game Systems
+
+-- 3 of 50 --
+
+5.1 Survival Systems
+Hunger / stamina / temperature
+Crafting tiers
+Weather hazards
+Biome-specific survival rules
+Failure to maintain survival → penalties → vulnerability in PvP
+5.2 RTS Colony System
+Players can:
+Recruit AI settlers
+Assign jobs:
+Gather
+Build
+Defend
+Scout
+Build automated production chains
+This creates:
+Key design constraint:
+Offline advantage must not equal offline dominance.
+5.3 Territory & Warfare
+Soft territory system (influence zones)
+Claim beacons
+Fortifiable strongholds
+Raid windows tied to escalation phases
+No permanent safety → risk is constant.
+A living base that runs while players are offline
+but is vulnerable to attack
+
+-- 4 of 50 --
+
+5.4 World Escalation System
+Every day introduces modifiers:
+Examples:
+Day 3: Blood Moon — monsters attack bases
+Day 5: Resource decay — scarcity pressure
+Day 6: Storm zone shrink (battle royale influence)
+Day 7: Apocalypse — forced convergence
+This ensures pacing and prevents stagnation.
+6. Progression & Meta
+Weekly Score Categories
+Territory control
+Military strength
+Resource stockpile
+PvE accomplishments
+Survival efficiency
+Faction dominance
+Persistent Progression
+Players earn:
+Account perks
+Cosmetic unlocks
+Strategic starting bonuses
+Commander traits
+Unique blueprints
+Meta progression should:
+✔ Reward skill
+✔ Encourage varied playstyles
+✔ Avoid pay-to-win
+✔ Reset competitive acknowledged skill each week
+
+-- 5 of 50 --
+
+7. Social Structure
+Factions capped at small sizes
+Temporary alliances allowed
+Betrayal is possible and supported
+In-game diplomacy tools
+The social drama is part of the design.
+8. Reset Philosophy
+Reset is not punishment.
+Reset is:
+Relief
+Excitement
+Fresh strategy
+Narrative closure
+Each week is a self-contained war story.
+Players return because:
+9. Monetization (Optional Direction)
+Cosmetic skins
+Commander cosmetics
+Seasonal passes
+Non-power account progression
+No direct competitive advantages sold.
+10. MVP Scope
+“This week will go differently.”
+
+-- 6 of 50 --
+
+For a prototype:
+1 biome
+20–30 player shard
+Simplified RTS workers
+Basic PvE escalation
+3 structure tiers
+Weekly reset system
+Territory influence prototype
+Goal:
+Test pacing + retention across one full cycle.
+11. Key Risks
+Snowballing factions
+Offline raiding frustration
+RTS complexity scaring survival players
+Server persistence cost
+Player burnout from weekly cadence
+Mitigation requires:
+Rubber-banding
+Event pacing
+Safe onboarding
+Strong UI clarity
+If you want, next we can build:
+✅ A detailed feature spec
+✅ A systems architecture diagram
+✅ A 7-day event calendar
+✅ Faction economy design
+✅ Combat model
+✅ RTS UI mock
+✅ Monetization plan
+
+-- 7 of 50 --
+
+✅ Technical server model
+✅ Pitch deck version
+✅ Steam store description
+✅ GDD expansion
+✅ Player journey walkthrough
+✅ Example 1-week narrative
+Just tell me what direction you want to take it next.
+Can you jot a note down for later, What about combining
+this with a hero character like in Warcraft 3
+Updated saved memory
+Noted — that’s a strong direction. A Warcraft 3–style hero layer would add identity,
+progression, and emotional attachment to the weekly loop. We can later explore:
+Hero leveling within the 7-day cycle
+Hero permadeath stakes
+Unique hero abilities that shape faction strategy
+Hero extraction / legacy rewards at world reset
+Commander-as-hero vs separate hero unit
+When you’re ready, we can design the hero system as its own pillar and plug it into the
+PRD.
+Okay, so some ideas. The main character starts as a unit
+like an scv (or builder) in starcraft 2. Their goal is to collect
+things like wood and rocks, there are also npc camps that
+contain goods that can be used to build and upgrade
+buildings in a base that the player can create. This base
+can have defenses, and harvester type units. The
+
+-- 8 of 50 --
+
+harvesters allow for a static generation of resources. When
+the player leaves the base, they are vulnerable to other
+players. If they die while out and about, they drop their
+things. Things can include weapons, armor, items, building
+materials, and special components.
+The challenge in this game is progressively fighting strong
+and more powerful players and NPC camps.
+This is a great concrete foundation — you’re basically describing a survival RTS with
+embodied risk: the commander is physically present in the world and can be killed. That’s
+powerful because it ties macro strategy to personal stakes.
+Let me formalize your ideas into a structured system draft and expand them so you can
+see how they scale.
+🧠 Core Concept Expansion
+Player Fantasy
+You’re not a floating RTS camera.
+You are a vulnerable builder in a hostile world.
+This creates tension:
+Leaving base = risk
+Staying home = stagnation
+Expansion = exposure
+That’s the engine of the game.
+🔁 Core Gameplay Loop (Refined)
+1. Spawn as Builder Unit
+“I am the founder of a fragile colony. My body is the weak point. My empire is my
+weapon.”
+
+-- 9 of 50 --
+
+2. Gather raw resources manually
+3. Establish starter base
+4. Create automated harvesters
+5. Equip yourself with gear
+6. Venture outward for rare components
+7. Fight NPC camps / rival players
+8. Upgrade base + army
+9. Repeat at higher stakes
+The loop becomes:
+🧱 Base System
+Starter Phase
+The player begins with:
+Basic tool
+Tiny stash
+No protection
+Manual gathering only
+This phase should feel scrappy and dangerous.
+Think: Valheim day 1 energy.
+Base Progression Tiers
+Tier 1: Outpost
+Small crafting station
+Resource storage
+1–2 harvesters
+Basic wall segments
+Purpose: survival
+Personal risk → empire growth → larger risk → larger empire
+
+-- 10 of 50 --
+
+Tier 2: Settlement
+Automated production chains
+Defensive towers
+AI guards
+Equipment crafting
+Purpose: growth
+Tier 3: Stronghold
+Advanced defenses
+Elite unit training
+Rare crafting
+Territory influence
+Purpose: dominance
+⛏ Resource Model
+You want layered resource types:
+Common Resources
+Wood
+Stone
+Scrap
+Fiber
+Used for:
+Walls
+Tools
+Basic structures
+Low risk, local gathering.
+Strategic Resources
+
+-- 11 of 50 --
+
+Found in NPC camps or contested zones:
+Power cores
+Rare metals
+Ancient tech
+Relics
+Monster trophies
+Used for:
+High-tier buildings
+Advanced units
+Hero upgrades (future system)
+Endgame gear
+These drive conflict.
+🧍 Player Body System
+This is one of your strongest ideas.
+The player is:
+✔ A builder
+✔ A combatant
+✔ A loot carrier
+✔ A risk vessel
+Death Rules
+When killed outside base:
+Drop inventory
+Drop equipped gear (partial or full)
+Body can be looted
+Respawn at base
+This creates:
+PvP tension
+Escort gameplay
+Raiding incentives
+
+-- 12 of 50 --
+
+Retrieval missions
+Optional modifier:
+🤖 AI Units
+Harvester Units
+Passive resource generation
+Require upkeep
+Vulnerable to raids
+Repairable
+This ensures:
+Combat Units
+Guards
+Patrol squads
+Escort units
+Players command them RTS-style:
+Rally points
+Patrol routes
+Defense zones
+This bridges survival and RTS.
+🗺 NPC Camp System
+NPC camps are escalation gates.
+Insurance system for critical items
+(late-game unlock)
+Offline production exists
+but isn’t safe forever
+
+-- 13 of 50 --
+
+Each camp tier introduces:
+Better loot
+Stronger enemies
+Unique mechanics
+Example:
+Tier 1 Camp
+Bandits, wolves, scrap loot
+Tier 2 Camp
+Fortified raiders, traps
+Tier 3 Camp
+Boss enemies, relic cores
+Tier 4 Camp
+World event locations
+These serve as:
+✔ PvE challenge
+✔ PvP hotspot
+✔ resource choke points
+⚔ Risk vs Reward Engine
+Your game thrives on:
+Design rules:
+Rare loot never spawns near safety
+Strong camps are visible from afar
+Valuable zones are contested
+Travel is dangerous
+The farther you go, the more you risk.
+
+-- 14 of 50 --
+
+No teleport safety net.
+Movement matters.
+📈 Progression Curve
+Players feel power in 3 ways:
+1. Personal gear
+2. Base strength
+3. AI army scale
+If one grows faster than others → imbalance.
+So pacing must tie them together.
+Example:
+You cannot craft advanced armor
+unless your base reaches Tier 2.
+🔥 Escalation Philosophy
+Your weekly arc becomes:
+Day 1–2: Scramble
+Day 3–4: First wars
+Day 5–6: Strongholds clash
+Day 7: Territory collapse event
+NPC camps become more aggressive over time.
+The world pushes players into conflict.
+🎯 The Core Challenge
+You said:
+
+-- 15 of 50 --
+
+That’s the backbone.
+We can frame it as:
+Every decision asks:
+Do I push outward?
+Do I consolidate?
+Do I raid someone weaker?
+Do I gamble on a big camp?
+That tension = replayability.
+If you want next, we can design:
+✅ Hero system layered onto this
+✅ Combat model (melee/ranged/magic)
+✅ Base raiding rules
+✅ Offline protection design
+✅ Server shard structure
+✅ 7-day escalation calendar
+✅ Example match story
+✅ Faction politics systems
+✅ Tech tree
+✅ PvP balance rules
+✅ Extraction mechanics
+✅ Gear rarity system
+Tell me what part you want to go deeper on. This concept is getting very strong.
+progressively fighting strong players and NPC camps
+Survival RTS as a ladder of escalating risk.
+
+-- 16 of 50 --
+
+The player can actually become a "hero", with abilities and
+skills. If they die, they respawn in the base.
+Excellent — this is the pivot that turns the game from builder survival RTS into a true
+identity-driven experience. Now the player isn’t just a worker…
+They are evolving into a commander-hero.
+Let’s formalize this into a system that preserves risk without killing momentum.
+🧙 Hero System Design Draft
+Core Rule
+Death is punishing, but not permanent.
+Progress is threatened, not erased.
+This keeps tension high without rage-quitting.
+Hero Lifecycle
+Phase 1: Founder (Early Game)
+Weak builder unit
+Basic combat capability
+No hero abilities
+Manual gathering focus
+This phase teaches survival and base setup.
+Phase 2: Ascension
+Every player begins as a fragile builder and can ascend into a hero.
+
+-- 17 of 50 --
+
+At a milestone (base tier, relic, NPC boss, or ritual):
+The player becomes a Hero.
+Unlocks:
+Ability tree
+Hero equipment slots
+Passive bonuses
+Skill specialization
+This is the emotional turning point.
+Phase 3: Hero Progression
+Heroes gain:
+XP from combat
+XP from camp clears
+XP from defending base
+XP from faction wars
+Leveling grants:
+Ability upgrades
+Stat boosts
+Unique traits
+Specializations
+Think Warcraft 3 hero progression layered onto survival.
+☠ Death Rules
+You want stakes but not frustration.
+Hero Death Outcome
+When a hero dies:
+“My colony now has a champion.”
+
+-- 18 of 50 --
+
+Respawn at base after timer
+Drop carried inventory
+Drop some equipment (optional tiered rule)
+Temporary injury debuff
+XP loss or durability damage
+Important:
+This preserves tension while keeping identity intact.
+Optional High-Stakes Mode
+Late-game unlock:
+Hero Core system
+If killed during special events:
+Hero enters wounded state
+Must retrieve fallen core
+Failure = severe penalty
+This creates legendary moments without permanent loss.
+🎯 Why This Works
+You now have:
+Survival Stakes
+You can lose gear
+RTS Stakes
+Your base can be destroyed
+Hero Stakes
+Hero power persists
+Inventory risk remains
+
+-- 19 of 50 --
+
+Your identity is threatened
+But not erased.
+This balance is critical for retention.
+⚔ Hero Design Direction
+Heroes shouldn’t just be stronger fighters.
+They should shape strategy.
+Example archetypes:
+Warlord
+Buffs armies, leads assaults
+Architect
+Stronger base, faster construction
+Hunter
+PvP assassin, scouting expert
+Warden
+Defensive hero, territory control
+Mystic
+Support + area control
+These archetypes influence:
+How factions play
+How bases are built
+How wars are fought
+Now every world has a shifting meta.
+
+-- 20 of 50 --
+
+🔁 Weekly Reset Integration
+At world reset:
+Hero levels reset
+Account unlocks persist
+New hero builds emerge
+This encourages experimentation.
+That’s replayability.
+Emotional Design Insight
+You’ve accidentally created something powerful:
+The hero is the face of the weekly war.
+Players remember:
+The hero who betrayed them
+The hero who defended the gate
+The hero who died holding the line
+Stories drive retention more than systems.
+If you want next, we can design:
+✅ Hero ability trees
+✅ Class roster
+✅ PvP hero balance
+✅ Boss fights that require heroes
+✅ Hero gear rarity
+✅ Injury/wounded system
+✅ Hero duels
+✅ Skill-based vs stat-based combat
+✅ Extraction hero progression
+“This week I try a warlord rush build.”
+
+-- 21 of 50 --
+
+✅ Legendary hero moments system
+✅ RTS synergy between heroes and armies
+✅ 7-day hero escalation arc
+Where do you want to zoom in? This is becoming a very strong hybrid identity.
+I want this game to play like World of Warcraft, with WASD
+movement, since I think that will make the most
+memorable minute-to-minute gameplay / combat and will
+support a building system like Valheim's/Rusts incredible
+well.
+That’s a very important decision — you’re locking in the feel of the game. And you’re right:
+WASD + action combat is what makes players emotionally attach to the world. RTS
+strategy gives macro depth, but WoW-style embodiment gives memory.
+Let’s formalize what this means for the design, because this choice cascades into almost
+every system.
+🎮 Core Control Model
+Design Principle
+You are not a cursor.
+You are not a god camera.
+You are inside the colony.
+That’s the fantasy anchor.
+The player always feels physically present in the world.
+
+-- 22 of 50 --
+
+🧍 Player Control Layer
+Movement
+WASD movement
+Mouse aim / camera control
+Third-person camera
+Optional lock-on targeting
+Combat Feel Target
+Closer to:
+WoW
+Valheim
+Elden Ring light combat
+Rust melee/gunplay hybrid
+NOT:
+click-to-move RTS
+tab-target MMO stiffness
+floaty survival combat
+You want weight, impact, and readability.
+⚔ Combat Model
+Ability Structure
+Hero combat blends:
+Light attacks
+Heavy attacks
+Active abilities
+Cooldowns
+Mobility skills
+Crowd control
+Think:
+WoW ability bar + survival combat physics
+
+-- 23 of 50 --
+
+Example hero kit:
+Q: dash slash
+E: shield stance
+R: area stun
+Passive: rally nearby units
+This keeps combat expressive without MMO bloat.
+🏗 Building System Integration
+You’re right that this control scheme fits building perfectly.
+When entering build mode:
+Snap grid appears
+Blueprint ghost previews
+Scroll to rotate
+Click to place
+Exactly like:
+Valheim
+Rust
+Fortnite creative
+Sons of the Forest
+The key:
+You’re placing real objects in space.
+🧠 RTS Layer Without Breaking Immersion
+Here’s the tricky part:
+How do we add RTS control without breaking WASD embodiment?
+We don’t switch to a full RTS camera.
+Building must feel like physical construction, not menu work.
+
+-- 24 of 50 --
+
+We layer command tools into the world.
+Command Mode Concept
+Hold a modifier key → tactical overlay appears
+You can:
+Drag-select nearby units
+Set rally points
+Assign jobs
+Mark patrol zones
+Issue defend/attack orders
+All while staying in third-person view.
+Think:
+You are commanding from the battlefield, not above it.
+This preserves immersion.
+🤖 Unit Behavior Philosophy
+AI units should be:
+Semi-autonomous
+They follow:
+job priorities
+defensive zones
+threat responses
+The player is not micro-managing constantly.
+You’re shaping behavior, not puppeteering.
+Mount & Blade + Warcraft hero hybrid
+
+-- 25 of 50 --
+
+This prevents RTS overload.
+🎯 Why This Is the Right Call
+Your game’s emotional hook becomes:
+Not:
+That difference is massive.
+Players remember:
+sprinting home with rare loot
+defending a wall in first person
+dueling another hero in the rain
+running through a burning base
+Embodied memories beat strategic memories.
+That’s why WoW, Rust, and Valheim stick.
+Risk: Complexity Creep
+You are combining:
+Survival crafting
+RTS colony sim
+Hero action combat
+PvP extraction tension
+This can become overwhelming fast.
+So the rule should be:
+“I was there.”
+“I controlled it.”
+The default experience must feel like a survival action game.
+
+-- 26 of 50 --
+
+RTS depth emerges gradually.
+Never front-load complexity.
+MVP Control Scope
+For early prototype:
+✔ WASD movement
+✔ Basic melee combat
+✔ 2–3 hero abilities
+✔ Simple build placement
+✔ 3 AI workers
+✔ Rally point system
+No tech tree yet.
+No massive armies yet.
+Just:
+Prove the core feeling first.
+If you want, next we can design:
+✅ Combat camera system
+✅ Ability UI layout
+✅ Build mode UX
+✅ AI behavior tree model
+✅ Control scheme mapping
+✅ Hero class combat feel
+✅ PvP duel design
+✅ Base defense combat flow
+✅ Unit command interface
+✅ Animation philosophy
+player + base + risk
+
+-- 27 of 50 --
+
+✅ Network model for combat
+✅ Example 10-minute gameplay slice
+Tell me what you want to zoom into next. This is turning into a very distinctive game
+identity.
+Okay, now we're going to wrap all of this into a game
+design document for easy reference.
+Love it — I’ll consolidate everything into a clean, structured Game Design Document v1
+that reads like an internal studio reference. This will be organized, skimmable, and
+expandable. You can hand this to designers, engineers, or investors and iterate on it later.
+🎮 Game Design Document
+Project Codename: Ashfall
+1. High Concept
+Ashfall is a multiplayer, non-persistent survival RTS where players begin as fragile builders
+and evolve into hero-commanders over the course of a 7-day world cycle. Players gather
+resources, build fortified bases, recruit AI units, fight escalating NPC threats, and clash with
+rival factions in embodied WASD combat.
+Each week is a self-contained war story.
+The world resets.
+The memories persist.
+2. Core Fantasy
+
+-- 28 of 50 --
+
+Players experience:
+Physical survival risk
+Strategic base growth
+Heroic identity progression
+PvP tension
+Weekly narrative arcs
+You are both:
+✔ the body on the battlefield
+✔ the mind behind the empire
+3. Core Pillars
+3.1 Embodied Survival
+WASD, third-person action combat. The player is physically vulnerable in the world.
+3.2 RTS Colony Command
+Players build automated bases and command AI workers and defenders.
+3.3 Hero Ascension
+Players evolve into powerful heroes with abilities and identity.
+3.4 Weekly Reset Loop
+Every match lasts 7 real-world days and ends in collapse.
+3.5 Escalating Conflict
+PvE and PvP pressures intensify daily.
+4. Game Structure
+World Format
+Persistent shard
+Build a colony. Become its champion. Survive the collapse.
+
+-- 29 of 50 --
+
+40–80 players
+Small factions (1–6 players)
+7-day cycle
+Full reset after collapse
+Session Model
+Drop-in / drop-out friendly.
+Offline bases continue functioning but remain vulnerable.
+5. Core Gameplay Loop
+1. Gather resources manually
+2. Establish starter base
+3. Automate production with AI harvesters
+4. Equip and upgrade hero
+5. Venture into contested zones
+6. Fight NPC camps
+7. Raid or defend against players
+8. Expand territory
+9. Survive escalating events
+Loop repeats with rising stakes.
+6. Player Lifecycle
+Phase 1: Founder
+Weak builder unit
+Manual gathering
+Minimal combat
+Establish base
+Phase 2: Hero Ascension
+Triggered by milestone:
+Base tier upgrade
+
+-- 30 of 50 --
+
+Boss kill
+Ritual event
+Unlocks:
+Ability tree
+Hero gear
+Combat specialization
+Phase 3: Hero Commander
+Leads armies
+Influences faction strategy
+High-stakes PvP combat
+7. Movement & Combat
+Controls
+WASD movement
+Third-person camera
+Mouse aim
+Ability hotbar
+Dodge / mobility
+Combat Style
+WoW-style action hybrid:
+Light / heavy attacks
+Active abilities
+Cooldowns
+Crowd control
+Mobility skills
+Combat must feel:
+✔ weighty
+✔ readable
+✔ responsive
+
+-- 31 of 50 --
+
+8. Death System
+When killed outside base:
+Drop carried inventory
+Potential gear loss
+Respawn at base after timer
+Temporary injury debuff
+Hero progression persists.
+Inventory risk remains.
+Death creates tension, not deletion.
+9. Base Building System
+Inspired by Valheim/Rust:
+Snap-based construction
+Physical blueprint placement
+Defensive structures
+Production buildings
+Storage
+Walls and fortifications
+Base tiers:
+Tier 1 – Outpost
+Survival
+Tier 2 – Settlement
+Automation + defense
+Tier 3 – Stronghold
+Dominance + elite units
+10. AI Unit System
+
+-- 32 of 50 --
+
+Harvesters
+Passive resource generation
+Require upkeep
+Raid vulnerable
+Guards
+Patrol zones
+Defensive response
+Escort players
+Command Mode
+Modifier key opens tactical overlay:
+Select units
+Assign jobs
+Set patrols
+Rally points
+No god camera. Commands are issued from the world.
+11. Resource Economy
+Common Resources
+Wood, stone, scrap, fiber
+Local gathering. Low risk.
+Strategic Resources
+Relics, rare metals, power cores
+Found in contested NPC camps.
+Drives PvP conflict.
+12. NPC Camp System
+Escalation gates that serve as PvE challenges and PvP hotspots.
+
+-- 33 of 50 --
+
+Camp tiers scale:
+1. Bandit camps
+2. Fortified outposts
+3. Boss strongholds
+4. world event locations
+Better camps = better loot = higher risk.
+13. Territory System
+Soft influence zones:
+Claim structures
+Defensible bases
+Raid windows
+No permanent safety
+Territory is contested, not owned forever.
+14. Weekly Escalation Arc
+Day 1–2: Establishment
+Land scramble, minimal war
+Day 3–4: Expansion
+Camp conflicts, faction tension
+Day 5–6: Collapse
+High-tier monsters, base sieges
+Day 7: Final Stand
+World-ending event
+Score resolution
+Mass conflict
+Reset → new world
+
+-- 34 of 50 --
+
+15. Progression Systems
+In-World Progression
+Resets weekly:
+Hero levels
+Base tiers
+Territory
+Account Meta Progression
+Persists:
+Cosmetics
+Commander traits
+Starting bonuses
+Blueprint unlocks
+Encourages experimentation each cycle.
+16. Social Structure
+Small factions
+Temporary alliances
+Betrayal allowed
+Diplomacy tools
+Social drama is intentional design.
+17. Emotional Design Goals
+Players should remember:
+defending a burning base
+carrying rare loot through hostile territory
+dueling rival heroes
+last stands during collapse
+The game is built to generate stories.
+
+-- 35 of 50 --
+
+18. MVP Scope
+Prototype includes:
+1 biome
+20–30 player shard
+Tier 1–2 bases
+Basic hero abilities
+Harvesters
+NPC camps tier 1–2
+Weekly reset system
+Goal: validate tension + pacing.
+19. Key Risks
+Snowballing factions
+Offline raiding frustration
+System overload
+RTS complexity barrier
+Server persistence costs
+Mitigation requires careful pacing and onboarding.
+If you want next, we can produce:
+✅ Full hero class roster
+✅ Tech tree document
+✅ 7-day event calendar
+✅ Economy spreadsheet model
+✅ Combat system spec
+✅ UI wireframes
+✅ Networking architecture
+✅ Pitch deck version
+✅ Steam page copy
+✅ Example 1-week player story
+
+-- 36 of 50 --
+
+✅ Monetization strategy
+✅ Roadmap & milestones
+Just tell me what direction to expand. This is already a strong foundation.
+Please make sure you include all details we've discussed in
+the GDD, like seasonal resets and seasonal ranks
+Perfect call — I’ll rewrite the GDD as a consolidated v2 that fully integrates:
+✔ weekly world resets
+✔ seasonal structure
+✔ seasonal ranking ladder
+✔ hero ascension
+✔ survival RTS systems
+✔ WASD embodied gameplay
+✔ PvP stakes
+✔ meta progression
+✔ escalation arc
+✔ competitive framing
+✔ competitive framing
+This version reads more like a studio master doc instead of a brainstorm.
+🎮 Game Design Document (GDD v2)
+Project Codename: Ashfall
+1. High Concept
+Ashfall is a multiplayer survival RTS where players begin as fragile builders and evolve into
+hero-commanders across a 7-day world cycle. Players gather resources, build automated
+
+-- 37 of 50 --
+
+colonies, command AI units, fight escalating PvE threats, and clash with rival factions in
+embodied WASD combat.
+Each weekly world ends in collapse.
+Scores are recorded.
+Ranks are awarded.
+A new war begins.
+The game blends:
+Survival crafting (Valheim / Rust)
+Hero action combat (WoW / Warcraft 3)
+RTS colony management
+Seasonal competitive resets
+Every week is a war story.
+Every season is a competitive arc.
+2. Core Fantasy
+Players are:
+physically embodied heroes
+strategic colony leaders
+competitive faction rivals
+survivors of a dying world
+3. Core Pillars
+3.1 Embodied Survival
+WASD, third-person, action combat. The player is physically vulnerable.
+3.2 RTS Colony Command
+Players automate bases and command AI workers and guards.
+Build a colony. Become its champion. Survive the collapse. Earn your legacy.
+
+-- 38 of 50 --
+
+3.3 Hero Identity
+Players ascend into heroes with abilities and skill trees.
+3.4 Weekly World Resets
+7-day cycles prevent stagnation and encourage experimentation.
+3.5 Seasonal Competitive Structure
+Weekly worlds feed into long-term seasonal ranks.
+3.6 Escalating Conflict
+The world becomes more hostile every day.
+4. Game Structure
+World Shards
+40–80 players per shard
+Solo or 2–6 player factions
+7-day persistent simulation
+Offline bases remain active
+Vulnerable but defendable
+At Day 7:
+World collapses → scoring → reset
+5. Weekly Cycle Arc
+Day 1–2: Establishment
+Land rush
+Starter bases
+Low PvP
+Day 3–4: Expansion
+NPC camp conflict
+Faction tension rises
+
+-- 39 of 50 --
+
+Strategic resource fights
+Day 5–6: Collapse Phase
+Base sieges
+elite monsters
+territory wars
+Day 7: Final Stand
+Apocalypse event
+forced convergence
+last battles determine ranking
+World resets after collapse.
+6. Seasonal Structure
+A season contains:
+6–10 weekly worlds
+cumulative ranking system
+cosmetic + prestige rewards
+leaderboard visibility
+Seasonal goals:
+encourage long-term play
+reward consistency
+create competitive identity
+At season end:
+ranks locked
+rewards distributed
+new season meta begins
+7. Seasonal Ranking System
+Players earn points weekly based on:
+Territory control
+
+-- 40 of 50 --
+
+NPC camp clears
+Hero combat performance
+Base survival
+Resource dominance
+PvP victories
+Final collapse placement
+Rank tiers example:
+Bronze
+Iron
+Silver
+Gold
+Mythic
+Legend
+Ranks represent strategic mastery, not just kill count.
+8. Player Lifecycle
+Phase 1: Founder
+fragile builder unit
+manual resource gathering
+minimal combat
+Phase 2: Hero Ascension
+Triggered by milestone:
+boss kill
+base tier unlock
+relic ritual
+Unlocks:
+hero abilities
+skill tree
+specialization
+Phase 3: Hero Commander
+
+-- 41 of 50 --
+
+leads armies
+high-impact PvP fighter
+faction centerpiece
+9. Hero System
+Heroes gain:
+XP from combat
+camp clears
+defense events
+faction wars
+Leveling grants:
+ability upgrades
+passives
+traits
+Archetype examples:
+Warlord (army buffs)
+Architect (base power)
+Hunter (PvP assassin)
+Warden (defense)
+Mystic (control/support)
+Hero progression resets weekly.
+Account unlocks persist seasonally.
+10. Death System
+Hero death results in:
+inventory drop
+potential gear loss
+respawn timer
+temporary injury debuff
+
+-- 42 of 50 --
+
+Hero identity persists.
+Inventory risk remains.
+Death is punishing, not deleting.
+11. Movement & Combat
+Controls
+WASD movement
+third-person camera
+ability hotbar
+dodge/mobility
+Combat Goals
+weighty
+responsive
+readable
+skill expressive
+Inspired by WoW + survival action combat.
+12. Base Building System
+Valheim/Rust-style construction:
+snap placement
+blueprint preview
+defensive architecture
+production chains
+territory fortification
+Base tiers:
+Tier 1 — Outpost
+Tier 2 — Settlement
+Tier 3 — Stronghold
+
+-- 43 of 50 --
+
+13. AI Unit System
+Harvesters
+Passive resource generation
+Guards
+Defense + patrol
+Escort Units
+Travel protection
+Command Mode
+World-integrated RTS overlay:
+select units
+assign jobs
+patrol zones
+rally points
+No top-down camera.
+14. Resource Economy
+Common
+wood, stone, scrap, fiber
+Strategic
+relics, cores, rare metals
+Strategic resources drive PvP conflict.
+15. NPC Camp System
+PvE escalation gates:
+bandit camps
+fortified strongholds
+
+-- 44 of 50 --
+
+bosses
+world event zones
+Serve as PvP hotspots.
+16. Territory System
+Soft influence model:
+claim beacons
+defendable bases
+raid vulnerability
+contested land
+No permanent safety.
+17. Progression Layers
+Weekly Reset
+hero levels
+bases
+territory
+gear
+Seasonal Persistence
+cosmetics
+blueprints
+traits
+prestige ranks
+18. Emotional Design Goals
+The game should generate stories:
+last stand defenses
+risky loot runs
+
+-- 45 of 50 --
+
+hero duels
+betrayal alliances
+collapse finales
+Memory > loot.
+19. MVP Scope
+Prototype includes:
+1 biome
+20–30 player shard
+Tier 1–2 bases
+hero prototype
+NPC camps tier 1–2
+weekly reset
+ranking prototype
+Goal: validate tension loop.
+20. Key Risks
+snowball factions
+offline raiding frustration
+system overload
+RTS intimidation
+server cost
+burnout from cadence
+Requires careful pacing + onboarding.
+If you want, next we can generate:
+✅ Pitch deck version
+✅ Investor one-pager
+✅ Steam store page
+
+-- 46 of 50 --
+
+✅ Combat system deep dive
+✅ Hero class design doc
+✅ Tech tree spec
+✅ Seasonal roadmap
+✅ UI mock descriptions
+✅ Server architecture outline
+✅ First tutorial flow
+✅ Example player story
+Just say where you want to go next. This GDD is now a strong foundation.
+I'm importing this content into another agent. Can you
+wrap up all of our context into a pdf?
+I made a PDF version of the GDD for you.
+You can download it here:
+👉 Download the Ashfall GDD PDF
+If you want, I can next:
+✅ Export a more polished, formatted studio-style PDF
+✅ Add section headers & typography
+✅ Add diagrams
+✅ Expand into a 10–20 page full design doc
+✅ Create a pitch deck version
+✅ Add hero system appendix
+✅ Add seasonal ranking tables
+Just tell me what version you want to evolve toward.
+
+-- 47 of 50 --
+
+I don't want just the GDD, I want the context of our entire
+conversation thus far in a pdf
+Got you — I exported a PDF that summarizes the entire context and intent of our
+conversation, not just the GDD.
+You can download it here:
+👉 Ashfall Conversation Context PDF
+If you want, I can generate a richer version next:
+✅ Full transcript-style export
+✅ Expanded design narrative
+✅ Studio-ready design brief
+✅ Pitch-ready concept document
+✅ 20+ page master design bible
+✅ Investor-facing PDF
+✅ Visual diagrams added
+Just tell me what flavor you want and I’ll evolve it.
+Oh come on, this is just 2 pages. We've had much more
+conversation than that, I basically want the whole log of
+our conversation exported. Every detail
+I understand what you’re asking now — you want a literal transcript-style export, not a
+summary.
+Here’s the limitation I need to be transparent about:
+ChatGPT 5.2
+
+-- 48 of 50 --
+
+👉 I don’t have raw system access to the full underlying chat log the way a backend
+export tool would.
+I only see messages as conversational context, not as a retrievable transcript file I can
+dump verbatim.
+So I cannot produce a perfect byte-for-byte chat history export.
+What I can do is reconstruct the entire conversation in structured transcript form and
+package that into a PDF. That’s what I just generated: a maximal reconstruction based on
+everything visible in this session.
+You can download it here:
+👉 Ashfall Full Conversation PDF
+If you want a true full transcript archive, the best path is:
+ChatGPT UI → Share → Export conversation
+That export contains the raw log I cannot access from inside the model.
+If you want, I can now create:
+✅ A fully expanded narrative transcript (20+ pages)
+✅ A studio design bible version
+✅ A pitch-ready document
+✅ A dev onboarding handbook
+✅ A hero system appendix
+✅ A technical architecture doc
+✅ A seasonal design roadmap
+Just tell me what direction you want to evolve this into.
+
+-- 49 of 50 --
+
+
+
+-- 50 of 50 --
+
+

@@ -1,0 +1,11 @@
+{
+  "name": "project-ashfall",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix ashfall-toolkit run dev",
+    "build": "npm --prefix ashfall-toolkit run build",
+    "start": "npm --prefix ashfall-toolkit run start",
+    "lint": "npm --prefix ashfall-toolkit run lint"
+  }
+}
+

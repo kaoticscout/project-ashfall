@@ -1,0 +1,397 @@
+Project Codename: Ashfall
+1. High Concept
+
+Ashfall is a multiplayer survival **action RPG** where you play a **hero character**: you level up, gear up, and take on escalating enemies and bosses with **WoW-inspired combat** (quick movement, hotbar abilities, cooldown windows, readable telegraphs, satisfying AoE). Exploration is fast and fluid thanks to **mounted traversal** and quick dismount-to-fight pacing.
+
+Optional competitive incentives (events/objectives/ladders) can refresh on a cadence, but the core game should not feel like an RTS “war sim” or colony economy loop.
+
+The game blends:
+
+Survival crafting (Valheim / Rust)
+
+Hero action combat (WoW)
+
+Seasonal competitive resets
+
+Every week is a war story.
+Every season is a competitive arc.
+
+2. Core Fantasy
+
+Become a hero. Master your build. Explore the world. Defeat bosses. Earn your legacy.
+
+Players are:
+
+physically embodied heroes
+
+competitive faction rivals
+
+survivors of a dying world
+
+3. Core Pillars
+3.1 Embodied Survival
+
+WASD, third-person, action combat. The player is physically vulnerable.
+
+3.2 WoW-Inspired Combat + Movement
+
+Quick, responsive traversal and hotbar ability combat (cooldowns, AoE, defensives, interrupts, curated CC).
+
+3.3 Hero Identity / Buildcraft
+
+Players ascend into heroes with abilities and skill trees.
+
+3.4 Mounted Exploration
+
+The world is meant to be traveled; mounts make exploration fast and satisfying.
+
+3.5 Homestead Building (Secondary)
+
+Valheim-like base building supports the adventure loop (crafting/comfort/storage/travel) without becoming the main power curve.
+
+3.6 Seasonal Competitive Structure
+
+Weekly worlds feed into long-term seasonal ranks.
+
+3.7 Escalating Threats
+
+The world becomes more hostile every day.
+
+4. Game Structure
+World Shards
+
+40–80 players per shard
+
+Solo or 2–6 player factions
+
+7-day persistent simulation
+
+Offline bases remain active
+
+Vulnerable but defendable
+
+At Day 7:
+World collapses → scoring → reset
+
+5. Weekly Cycle Arc
+Day 1–2: Establishment
+
+Land rush
+
+Starter bases
+
+Low PvP
+
+Day 3–4: Expansion
+
+NPC camp conflict
+
+Faction tension rises
+
+Strategic resource fights
+
+Day 5–6: Collapse Phase
+
+Base sieges
+
+elite monsters
+
+territory wars
+
+Day 7: Final Stand
+
+Apocalypse event
+
+forced convergence
+
+last battles determine ranking
+
+World resets after collapse.
+
+6. Seasonal Structure
+
+A season contains:
+
+6–10 weekly worlds
+
+cumulative ranking system
+
+cosmetic + prestige rewards
+
+leaderboard visibility
+
+Seasonal goals:
+
+encourage long-term play
+
+reward consistency
+
+create competitive identity
+
+At season end:
+
+ranks locked
+
+rewards distributed
+
+new season meta begins
+
+7. Seasonal Ranking System
+
+Players earn points weekly based on:
+
+Territory control
+
+NPC camp clears
+
+Hero combat performance
+
+Base survival
+
+Resource dominance
+
+PvP victories
+
+Final collapse placement
+
+Rank tiers example:
+
+Bronze
+
+Iron
+
+Silver
+
+Gold
+
+Mythic
+
+Legend
+
+Ranks represent strategic mastery, not just kill count.
+
+8. Player Lifecycle
+Phase 1: Adventurer
+
+basic kit online immediately
+
+clear early POIs
+
+first gear upgrades
+
+Phase 2: Specialization
+
+talents/runes/augments unlock build identity
+
+mobility + AoE + defensives come online
+
+target elite objectives (bosses, contested events)
+
+Phase 3: Endgame Mastery
+
+optimized builds and gear chasing
+
+high-skill combat vs elite threats
+
+optional ladders/events/PvP hotspots tied to objectives
+
+9. Hero System
+
+Heroes gain:
+
+XP from combat
+
+camp clears
+
+defense events
+
+faction wars
+
+Leveling grants:
+
+ability upgrades
+
+passives
+
+traits
+
+Archetype examples:
+
+Warlord (army buffs)
+
+Architect (base power)
+
+Hunter (PvP assassin)
+
+Warden (defense)
+
+Mystic (control/support)
+
+Hero progression resets weekly.
+Account unlocks persist seasonally.
+
+10. Death System
+
+Hero death results in:
+
+inventory drop
+
+potential gear loss
+
+respawn timer
+
+temporary injury debuff
+
+Hero identity persists.
+Inventory risk remains.
+
+Death is punishing, not deleting.
+
+11. Movement & Combat
+Controls
+
+WASD movement
+
+third-person camera
+
+ability hotbar
+
+dodge/mobility
+
+Combat Goals
+
+weighty
+
+responsive
+
+readable
+
+skill expressive
+
+Inspired by WoW + survival action combat.
+
+12. Base Building System
+
+Valheim/Rust-style construction:
+
+snap placement
+
+blueprint preview
+
+crafting stations + storage
+
+comfort/home buffs
+
+optional travel convenience
+
+Base tiers:
+
+Tier 1 — Outpost
+Tier 2 — Settlement
+Tier 3 — Stronghold
+
+13. AI Unit System
+Optional helpers/automation (if included) must be bounded and must not become an RTS micro layer.
+
+14. Resource Economy
+Common
+
+wood, stone, scrap, fiber
+
+Strategic
+
+relics, cores, rare metals
+
+Strategic resources drive PvP conflict.
+
+15. NPC Camp System
+
+PvE escalation gates:
+
+bandit camps
+
+fortified strongholds
+
+bosses
+
+world event zones
+
+Serve as PvP hotspots.
+
+16. Territory System
+
+Soft influence model:
+
+Optional PvP objectives model:
+
+contested hotspots tied to elite objectives/events
+
+avoid offline-base raiding as a primary loop
+
+17. Progression Layers
+Persistent Hero Progression
+
+hero levels
+gear
+build unlocks
+
+Seasonal Persistence
+
+cosmetics
+blueprints
+traits
+prestige ranks
+
+18. Emotional Design Goals
+
+The game should generate stories:
+
+last stand defenses
+
+risky loot runs
+
+hero duels
+
+betrayal alliances
+
+collapse finales
+
+Memory > loot.
+
+19. MVP Scope
+
+Prototype includes:
+
+1 biome
+
+20–30 player shard
+
+Tier 1 base building (camp + crafting + comfort)
+
+hero prototype (WoW-like movement feel + splashy ability kit)
+
+mount traversal prototype
+
+NPC camps tier 1–2
+
+1 boss encounter
+
+optional event cadence prototype
+
+Goal: validate tension loop.
+
+20. Key Risks
+
+snowball factions
+
+offline raiding frustration
+
+system overload
+
+complexity intimidation
+
+server cost
+
+burnout from cadence
+
+Requires careful pacing + onboarding.
