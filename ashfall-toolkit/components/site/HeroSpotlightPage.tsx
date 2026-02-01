@@ -7,6 +7,7 @@ import { AbilityToggle } from "@/components/site/AbilityToggle";
 import { getHeroById } from "@/lib/heroArchetypes";
 import { getHeroSpotlight, type StatBarRow } from "@/lib/heroSpotlights";
 import { withBasePath } from "@/lib/withBasePath";
+import skillsAtlas from "@/public/assets/Classes/Skills/TextureAtlas.json";
 
 function StatBar(props: StatBarRow) {
   const clamped = Math.max(0, Math.min(5, props.value));
@@ -157,7 +158,11 @@ export function HeroSpotlightPage(props: { heroId: string }) {
 
       <OrnamentDivider className="mx-auto max-w-[1320px] px-4 opacity-70" />
 
-      <AbilityToggle abilities={spotlight.abilities} stickyTopClassName="top-16" />
+      <AbilityToggle
+        abilities={spotlight.abilities}
+        stickyTopClassName="top-16"
+        atlas={skillsAtlas}
+      />
 
       <OrnamentDivider className="mx-auto max-w-[1320px] px-4 opacity-70 pb-10 sm:pb-14" />
     </div>

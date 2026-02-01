@@ -2,19 +2,49 @@ export type ToggleAbility = {
   id: string;
   slot: string;
   name: string;
+  /**
+   * Optional texture-atlas sprite name for this ability icon.
+   * Use when multiple abilities share the same display name (e.g. "Signal Flare").
+   */
+  iconName?: string;
   type: string;
   cooldown: string;
   summary: string;
   tags?: string[];
 };
 
+import type { TextureAtlasMeta, TextureAtlasSprite } from "@/components/site/TextureAtlasIcon";
+import { TextureAtlasIcon } from "@/components/site/TextureAtlasIcon";
+import { withBasePath } from "@/lib/withBasePath";
+
+type TextureAtlas = {
+  meta: TextureAtlasMeta;
+  sprites: TextureAtlasSprite[];
+};
+
 export function AbilityToggle(props: {
   abilities: ToggleAbility[];
   stickyTopClassName?: string;
+  atlas?: TextureAtlas;
+  atlasImageSrc?: string;
 }) {
   const abilities = props.abilities;
   const first = abilities[0];
   if (!first) return null;
+
+  const spriteByName = (() => {
+    const atlas = props.atlas;
+    if (!atlas) return null;
+    const map = new Map<string, TextureAtlasSprite>();
+    for (const s of atlas.sprites) map.set(s.name, s);
+    return map;
+  })();
+
+  const atlasImageSrc =
+    props.atlasImageSrc ??
+    (props.atlas?.meta.image
+      ? withBasePath(`/assets/Classes/Skills/${props.atlas.meta.image}`)
+      : undefined);
 
   const inputId = (id: string) => `ability_${id}`;
 
@@ -71,32 +101,38 @@ export function AbilityToggle(props: {
               </div>
             </div>
 
-            <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-3 mx-auto grid max-w-[520px] grid-cols-3 gap-2 sm:max-w-[860px] sm:grid-cols-6">
               {abilities.map((a) => (
                 <label
                   key={a.id}
                   htmlFor={inputId(a.id)}
-                  className="group cursor-pointer rounded-2xl border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-1)_55%,transparent)] px-4 py-3 text-[color:var(--text-1)] transition-colors hover:border-[color:var(--border-accent)]"
-                  title={`${a.slot} • ${a.type} • CD ${a.cooldown}`}
+                  className="group relative flex aspect-square cursor-pointer items-center justify-center overflow-hidden rounded-2xl border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-1)_55%,transparent)] p-2 text-[color:var(--text-1)] transition-colors hover:border-[color:var(--border-accent)]"
+                  title={`${a.slot} • ${a.name}`}
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2">
-                        <span className="rounded-lg border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-2)_70%,transparent)] px-2 py-1 text-xs font-semibold text-[color:var(--text-0)]">
-                          {a.slot.toUpperCase()}
-                        </span>
-                        <span className="truncate text-sm font-semibold text-[color:var(--text-0)]">
-                          {a.name}
-                        </span>
-                      </div>
-                      <div className="mt-1 text-xs text-[color:var(--text-2)]">
-                        {a.type} • CD {a.cooldown}
-                      </div>
-                    </div>
-                    <span className="shrink-0 rounded-full border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-2)_60%,transparent)] px-3 py-1 text-[10px] tracking-[0.22em] text-[color:var(--text-2)]">
-                      VIEW
-                    </span>
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-b from-[color:color-mix(in_oklab,var(--accent-gold)_10%,transparent)] via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+
+                  {spriteByName && atlasImageSrc ? (
+                    (() => {
+                      const spriteName = a.iconName ?? a.name;
+                      const sprite = spriteByName.get(spriteName);
+                      return sprite ? (
+                        <TextureAtlasIcon
+                          atlasMeta={props.atlas!.meta}
+                          sprite={sprite}
+                          imageSrc={atlasImageSrc}
+                          renderSizePx={92}
+                          frameWidthPx={2}
+                          glowPx={16}
+                          className="relative h-[92px] w-[92px] rounded-2xl border border-[color:color-mix(in_oklab,var(--border-subtle)_85%,transparent)] bg-[color:color-mix(in_oklab,var(--bg-2)_70%,transparent)]"
+                          title={a.name}
+                        />
+                      ) : null;
+                    })()
+                  ) : null}
+
+                  <span className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-lg border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-2)_75%,transparent)] px-3 py-1 text-xs font-semibold text-[color:var(--text-0)] shadow-[var(--glow-gold)]">
+                    {a.slot.toUpperCase()}
+                  </span>
                 </label>
               ))}
             </div>
@@ -119,11 +155,38 @@ export function AbilityToggle(props: {
 
                 <div className="mt-3 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                   <div>
-                    <h2 className="ashfall-display text-balance text-3xl text-[color:var(--text-0)] sm:text-4xl">
-                      {a.name}
-                    </h2>
-                    <div className="mt-2 text-sm text-[color:var(--text-2)]">
-                      {a.type} • {a.slot} • Cooldown {a.cooldown}
+                    <div className="flex items-center gap-4">
+                      {spriteByName && atlasImageSrc ? (
+                        (() => {
+                          const spriteName = a.iconName ?? a.name;
+                          const sprite = spriteByName.get(spriteName);
+                          return sprite ? (
+                            <TextureAtlasIcon
+                              atlasMeta={props.atlas!.meta}
+                              sprite={sprite}
+                              imageSrc={atlasImageSrc}
+                              renderSizePx={56}
+                              frameWidthPx={2}
+                              glowPx={16}
+                              className="h-[56px] w-[56px] rounded-2xl border border-[color:color-mix(in_oklab,var(--border-subtle)_85%,transparent)] bg-[color:color-mix(in_oklab,var(--bg-1)_70%,transparent)]"
+                              title={a.name}
+                            />
+                          ) : null;
+                        })()
+                      ) : null}
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-3">
+                          <h2 className="ashfall-display text-balance text-3xl text-[color:var(--text-0)] sm:text-4xl">
+                            {a.name}
+                          </h2>
+                          <span className="rounded-lg border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-2)_70%,transparent)] px-2 py-1 text-xs font-semibold text-[color:var(--text-0)]">
+                            {a.slot.toUpperCase()}
+                          </span>
+                        </div>
+                        <div className="mt-2 text-sm text-[color:var(--text-2)]">
+                          {a.type} • {a.slot} • Cooldown {a.cooldown}
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2">
