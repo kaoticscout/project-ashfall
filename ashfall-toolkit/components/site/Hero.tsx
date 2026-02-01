@@ -7,6 +7,7 @@ export function Hero(props: {
   subtitle?: string;
   children?: ReactNode;
   background?: "default" | "world";
+  backgroundVideoSrc?: string;
   variant?: "default" | "home";
   titleSize?: "default" | "brand";
   showDivider?: boolean;
@@ -37,7 +38,10 @@ export function Hero(props: {
   const subtitleAlign = align === "center" ? "mx-auto" : "";
   const overlay =
     props.variant === "home"
-      ? "bg-[radial-gradient(520px_240px_at_50%_0%,rgba(120,160,255,0.16),transparent_62%),radial-gradient(1100px_520px_at_50%_0%,rgba(28,62,150,0.44),transparent_72%),linear-gradient(180deg,#050b1b_0px,#050b1b_320px,var(--bg-0)_440px,var(--bg-0)_100%)]"
+      ? props.backgroundVideoSrc
+        ? // When a video is present, keep the overlay translucent so motion reads behind the title/CTA.
+          "bg-[radial-gradient(520px_240px_at_50%_0%,rgba(120,160,255,0.12),transparent_62%),radial-gradient(1100px_520px_at_50%_0%,rgba(28,62,150,0.22),transparent_72%),linear-gradient(180deg,rgba(5,11,27,0.55)_0px,rgba(5,11,27,0.72)_340px,rgba(5,11,27,0.86)_620px,rgba(5,11,27,0.92)_100%)]"
+        : "bg-[radial-gradient(520px_240px_at_50%_0%,rgba(120,160,255,0.16),transparent_62%),radial-gradient(1100px_520px_at_50%_0%,rgba(28,62,150,0.44),transparent_72%),linear-gradient(180deg,#050b1b_0px,#050b1b_320px,var(--bg-0)_440px,var(--bg-0)_100%)]"
       : "bg-gradient-to-b from-[color:color-mix(in_oklab,var(--bg-0)_30%,transparent)] via-[color:color-mix(in_oklab,var(--bg-0)_85%,transparent)] to-[color:var(--bg-0)]";
 
   const vertical = props.vertical ?? "top";
@@ -57,6 +61,20 @@ export function Hero(props: {
   return (
     <section className={`relative overflow-hidden ${bg} ${sectionSizing}`}>
       <div className="absolute inset-0">
+        {props.backgroundVideoSrc ? (
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ filter: "brightness(0.6) saturate(1.1) contrast(1.05)" }}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-hidden="true"
+          >
+            <source src={props.backgroundVideoSrc} type="video/mp4" />
+          </video>
+        ) : null}
         <div className="ashfall-bg-noise absolute inset-0" />
         <div className={`absolute inset-0 ${overlay}`} />
       </div>

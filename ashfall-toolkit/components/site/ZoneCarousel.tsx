@@ -9,6 +9,17 @@ type Zone = {
   imageSrc: string;
 };
 
+type ZoneCarouselPreface = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  bullets: string[];
+};
+
+type ZoneCarouselProps = {
+  preface?: ZoneCarouselPreface;
+};
+
 function ArrowIcon(props: { direction: "left" | "right" }) {
   const isLeft = props.direction === "left";
   return (
@@ -37,7 +48,8 @@ function toTitle(s: string) {
     .join(" ");
 }
 
-export function ZoneCarousel() {
+export function ZoneCarousel(props: ZoneCarouselProps) {
+  const { preface } = props;
   const zones = useMemo<Zone[]>(
     () => [
       {
@@ -92,6 +104,31 @@ export function ZoneCarousel() {
       </div>
 
       <div className="relative mx-auto max-w-[1320px] px-4">
+        {preface ? (
+          <div className="pb-8">
+            <div className="text-xs tracking-[0.32em] text-[color:var(--text-2)]">
+              {preface.eyebrow}
+            </div>
+            <h2 className="ashfall-display mt-3 text-balance text-3xl text-[color:var(--text-0)] sm:text-4xl">
+              {preface.title}
+            </h2>
+            <p className="mt-4 max-w-4xl text-pretty text-sm leading-relaxed text-[color:var(--text-1)] sm:text-base">
+              {preface.description}
+            </p>
+            <div className="mt-6 grid gap-3 text-sm text-[color:var(--text-1)] sm:grid-cols-2 lg:grid-cols-3">
+              {preface.bullets.map((x) => (
+                <div
+                  key={x}
+                  className="rounded-xl border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-1)_55%,transparent)] px-4 py-3"
+                >
+                  {x}
+                </div>
+              ))}
+            </div>
+            <div className="mt-10 h-px w-full bg-[color:color-mix(in_oklab,var(--border-subtle)_70%,transparent)]" />
+          </div>
+        ) : null}
+
         <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
           <div>
             <div className="text-xs tracking-[0.32em] text-[color:var(--text-2)]">

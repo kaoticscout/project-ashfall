@@ -31,6 +31,56 @@ export default function GamePage() {
         </div>
       </Hero>
 
+      <section className="pt-10 pb-4 ">
+        <div className="mx-auto max-w-[1320px] px-4">
+          <div className="text-xs tracking-[0.32em] text-[color:var(--text-2)]">
+            GAME STYLE
+          </div>
+          <h2 className="ashfall-display mt-3 text-balance text-3xl text-[color:var(--text-0)] sm:text-4xl">
+            Hero Sieges - World of Warcraft Collides with Rust
+          </h2>
+
+          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                k: "EXPLORATION & MOVEMENT (WoW-inspired)",
+                v: "Mounted travel across a giant continent—routes, biomes, and “ride out” decisions.",
+              },
+              {
+                k: "WORLD & DESTINATIONS (WoW-inspired)",
+                v: "Distinct zones with dungeons, strongholds, boss arenas, and hotspots that pull squads together.",
+              },
+              {
+                k: "BASE (Rust-inspired)",
+                v: "Gather materials, upgrade workbenches, unlock tiers, and fortify a raid-worthy stronghold.",
+              },
+              {
+                k: "COMBAT (V Rising–inspired)",
+                v: "High-tempo action with a few key abilities—less rotation, more aim, timing, and spacing.",
+              },
+              {
+                k: "HEROES (Heroes of the Storm–inspired)",
+                v: "Strong identities and clear roles—each hero feels different to play and to fight against.",
+              },
+              {
+                k: "WEEKLY RESET (Rust-inspired)",
+                v: "A weekly cadence that ramps pressure into raid windows—then resets the board so every week has a fresh climax.",
+              },
+            ].map((x) => (
+              <div
+                key={x.k}
+                className="rounded-2xl border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-0)_35%,transparent)] px-5 py-4"
+              >
+                <div className="text-xs tracking-[0.32em] text-[color:var(--text-2)]">
+                  {x.k}
+                </div>
+                <div className="mt-2 text-sm text-[color:var(--text-1)]">{x.v}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-[1320px] px-4">
           <div className="text-xs tracking-[0.32em] text-[color:var(--text-2)]">
@@ -113,8 +163,8 @@ export default function GamePage() {
                     {[
                       "Choose a target (boss, hotspot, rival base).",
                       "Ride out. Fight fast. Make a play.",
-                      "Loot and extract with what matters.",
-                      "Upgrade your kit. Stock consumables.",
+                        "Loot and extract with what matters — or harvest materials.",
+                        "Level up and gear your hero. Stock consumables.",
                       "Fortify your garrison… or launch a siege.",
                     ].map((x, i) => (
                       <li
@@ -137,8 +187,13 @@ export default function GamePage() {
         </div>
       </section>
 
-      <section className="pb-10 sm:pb-14">
-        <div className="mx-auto max-w-[1320px] px-4">
+      <section className="relative overflow-hidden py-12 sm:py-16">
+        <div className="absolute inset-0">
+          <div className="ashfall-bg-noise absolute inset-0" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[color:color-mix(in_oklab,var(--accent-arcane)_12%,transparent)] via-[color:color-mix(in_oklab,var(--bg-0)_86%,transparent)] to-[color:var(--bg-0)]" />
+        </div>
+
+        <div className="relative mx-auto max-w-[1320px] px-4">
           <div className="text-xs tracking-[0.32em] text-[color:var(--text-2)]">
             TARGETS
           </div>
@@ -221,22 +276,13 @@ export default function GamePage() {
             </div>
           </div>
 
-          <OrnamentDivider className="mt-10 opacity-70" />
-        </div>
-      </section>
+          <OrnamentDivider className="mt-12 opacity-70" />
 
-      <section className="relative overflow-hidden py-12 sm:py-16">
-        <div className="absolute inset-0">
-          <div className="ashfall-bg-noise absolute inset-0" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[color:color-mix(in_oklab,var(--accent-arcane)_12%,transparent)] via-[color:color-mix(in_oklab,var(--bg-0)_86%,transparent)] to-[color:var(--bg-0)]" />
-        </div>
-
-        <div className="relative mx-auto max-w-[1320px] px-4">
-          <div className="text-xs tracking-[0.32em] text-[color:var(--text-2)]">
-            WORLD RAID BOSSES
+          <div className="mt-12 text-xs tracking-[0.32em] text-[color:var(--text-2)]">
+            HIGH VALUE TARGETS
           </div>
           <h2 className="ashfall-display mt-3 text-balance text-3xl text-[color:var(--text-0)] sm:text-4xl">
-            End-game co-op. Non‑PvP. Personal loot.
+            Band Together and Prove Your Strength
           </h2>
           <p className="mt-4 max-w-4xl text-pretty text-sm leading-relaxed text-[color:var(--text-1)] sm:text-base">
             World Raid Bosses are weekly end-game targets: you rally with other players to take down a raid-scale monster.
@@ -309,20 +355,7 @@ export default function GamePage() {
                     <div className="text-sm text-[color:var(--text-1)]">
                       The boss is co-op. The world isn’t. The win is extracting with the reward and turning it into power.
                     </div>
-                    <div className="mt-5 flex flex-wrap gap-3">
-                      <Link
-                        href="/seasons"
-                        className="ashfall-button-primary rounded-md px-4 py-2 text-sm font-medium text-[color:var(--text-0)]"
-                      >
-                        See seasons
-                      </Link>
-                      <Link
-                        href="/leaderboard"
-                        className="ashfall-button-secondary rounded-md px-4 py-2 text-sm font-medium text-[color:var(--text-1)] hover:text-[color:var(--text-0)]"
-                      >
-                        View leaderboard
-                      </Link>
-                    </div>
+
                   </div>
                 </div>
               </div>
@@ -331,8 +364,13 @@ export default function GamePage() {
         </div>
       </section>
 
-      <section className="pt-20 pb-10 sm:pb-14">
-        <div className="mx-auto max-w-[1320px] px-4">
+      <section className="relative overflow-hidden py-12 sm:py-16">
+        <div className="absolute inset-0">
+          <div className="ashfall-bg-noise absolute inset-0" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[color:color-mix(in_oklab,var(--accent-gold)_10%,transparent)] via-[color:color-mix(in_oklab,var(--bg-0)_88%,transparent)] to-[color:var(--bg-0)]" />
+        </div>
+
+        <div className="relative mx-auto max-w-[1320px] px-4">
           <div className="text-xs tracking-[0.32em] text-[color:var(--text-2)]">
             LEVELING
           </div>
@@ -416,12 +454,8 @@ export default function GamePage() {
             </div>
           </div>
 
-          <OrnamentDivider className="mt-10 opacity-70" />
-        </div>
-      </section>
+          <OrnamentDivider className="my-12 opacity-70" />
 
-      <section className="pb-10 sm:pb-14">
-        <div className="mx-auto max-w-[1320px] px-4">
           <div className="text-xs tracking-[0.32em] text-[color:var(--text-2)]">
             SIEGING
           </div>
@@ -525,12 +559,8 @@ export default function GamePage() {
             </div>
           </div>
 
-          <OrnamentDivider className="mt-10 opacity-70" />
-        </div>
-      </section>
+          <OrnamentDivider className="my-12 opacity-70" />
 
-      <section className="pb-10 sm:pb-14">
-        <div className="mx-auto max-w-[1320px] px-4">
           <div className="text-xs tracking-[0.32em] text-[color:var(--text-2)]">
             GARRISONING
           </div>
@@ -545,35 +575,69 @@ export default function GamePage() {
 
           <div className="mt-8 grid gap-4 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <div className="ashfall-panel">
-                <div className="relative border-b border-[color:var(--border-subtle)] px-5 py-4">
-                  <div className="ashfall-display text-sm font-semibold text-[color:var(--text-0)]">
-                    What “defense” means in Ashfall
+              <div className="grid gap-4">
+                <div className="ashfall-panel">
+                  <div className="relative border-b border-[color:var(--border-subtle)] px-5 py-4">
+                    <div className="ashfall-display text-sm font-semibold text-[color:var(--text-0)]">
+                      What “defense” means in Ashfall
+                    </div>
+                    <div className="mt-1 text-sm text-[color:var(--text-2)]">
+                      Time is a resource. You’re buying it.
+                    </div>
                   </div>
-                  <div className="mt-1 text-sm text-[color:var(--text-2)]">
-                    Time is a resource. You’re buying it.
+                  <div className="relative px-5 py-5">
+                    <div className="grid gap-3 text-sm text-[color:var(--text-1)] sm:grid-cols-2">
+                      {[
+                        "Walls and doors that control entry paths",
+                        "Turrets that punish obvious approaches",
+                        "Traps and alarms that create warning and chaos",
+                        "Wards/detectors to spot infiltrators and sappers",
+                        "Choke points and fallback rooms for layered defense",
+                        "Vault placement that forces commitment to reach",
+                      ].map((x) => (
+                        <div
+                          key={x}
+                          className="rounded-xl border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-1)_55%,transparent)] px-4 py-3"
+                        >
+                          {x}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-4 text-xs tracking-[0.22em] text-[color:var(--text-2)]">
+                      The goal: delay the breach long enough for defenders to rally and swing the fight.
+                    </div>
                   </div>
                 </div>
-                <div className="relative px-5 py-5">
-                  <div className="grid gap-3 text-sm text-[color:var(--text-1)] sm:grid-cols-2">
-                    {[
-                      "Walls and doors that control entry paths",
-                      "Turrets that punish obvious approaches",
-                      "Traps and alarms that create warning and chaos",
-                      "Wards/detectors to spot infiltrators and sappers",
-                      "Choke points and fallback rooms for layered defense",
-                      "Vault placement that forces commitment to reach",
-                    ].map((x) => (
-                      <div
-                        key={x}
-                        className="rounded-xl border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-1)_55%,transparent)] px-4 py-3"
-                      >
-                        {x}
-                      </div>
-                    ))}
+
+                <div className="ashfall-panel">
+                  <div className="relative border-b border-[color:var(--border-subtle)] px-5 py-4">
+                    <div className="ashfall-display text-sm font-semibold text-[color:var(--text-0)]">
+                      Workbench progression (Rust-style)
+                    </div>
+                    <div className="mt-1 text-sm text-[color:var(--text-2)]">
+                      Materials unlock tiers. Tiers unlock power.
+                    </div>
                   </div>
-                  <div className="mt-4 text-xs tracking-[0.22em] text-[color:var(--text-2)]">
-                    The goal: delay the breach long enough for defenders to rally and swing the fight.
+                  <div className="relative px-5 py-5">
+                    <div className="text-sm text-[color:var(--text-1)]">
+                      Your stronghold isn’t just “more walls”—it’s a tech ladder. As you collect materials and complete
+                      upgrades, your workbench tier rises and expands what you can craft: stronger building parts,
+                      better defenses, smarter traps, and higher-end siege counterplay.
+                    </div>
+                    <ul className="mt-4 grid gap-3 text-sm text-[color:var(--text-1)]">
+                      <li>
+                        <span className="text-[color:var(--text-0)] font-semibold">Tier upgrades</span>: spend gathered + rare mats to unlock new recipes.
+                      </li>
+                      <li>
+                        <span className="text-[color:var(--text-0)] font-semibold">Craft gates</span>: the best turrets, walls, and wards require higher tiers.
+                      </li>
+                      <li>
+                        <span className="text-[color:var(--text-0)] font-semibold">Base power scaling</span>: progression turns your garrison into a real raid target.
+                      </li>
+                    </ul>
+                    <div className="mt-4 text-xs tracking-[0.22em] text-[color:var(--text-2)]">
+                      Gather → upgrade → craft → fortify → survive the raid window.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -581,6 +645,39 @@ export default function GamePage() {
 
             <div className="lg:col-span-5">
               <div className="grid gap-4">
+                <div className="ashfall-panel">
+                  <div className="relative border-b border-[color:var(--border-subtle)] px-5 py-4">
+                    <div className="ashfall-display text-sm font-semibold text-[color:var(--text-0)]">
+                      Resource collection
+                    </div>
+                    <div className="mt-1 text-sm text-[color:var(--text-2)]">
+                      How you get materials to build.
+                    </div>
+                  </div>
+                  <div className="relative px-5 py-5">
+                    <ul className="grid gap-3 text-sm text-[color:var(--text-1)]">
+                      <li>
+                        <span className="text-[color:var(--text-0)] font-semibold">Gathering</span>: mine ore, harvest timber, and pick up fibers on your runs.
+                      </li>
+                      <li>
+                        <span className="text-[color:var(--text-0)] font-semibold">Salvage</span>: break down spare gear and base parts into components.
+                      </li>
+                      <li>
+                        <span className="text-[color:var(--text-0)] font-semibold">Targets</span>: dungeons, strongholds, and bosses drop rare building mats.
+                      </li>
+                      <li>
+                        <span className="text-[color:var(--text-0)] font-semibold">Risk routes</span>: contested hotspots yield the best returns—but attract raids.
+                      </li>
+                      <li>
+                        <span className="text-[color:var(--text-0)] font-semibold">Trade</span>: swap surplus resources with other players to finish a build fast.
+                      </li>
+                    </ul>
+                    <div className="mt-4 text-xs tracking-[0.22em] text-[color:var(--text-2)]">
+                      Your base is made from what you survive bringing home.
+                    </div>
+                  </div>
+                </div>
+
                 <div className="ashfall-panel">
                   <div className="relative border-b border-[color:var(--border-subtle)] px-5 py-4">
                     <div className="ashfall-display text-sm font-semibold text-[color:var(--text-0)]">
@@ -628,8 +725,6 @@ export default function GamePage() {
               </div>
             </div>
           </div>
-
-          <OrnamentDivider className="mt-10 opacity-70" />
         </div>
       </section>
 
@@ -681,35 +776,18 @@ export default function GamePage() {
             ))}
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/seasons"
-              className="ashfall-button-primary rounded-md px-4 py-2 text-sm font-medium text-[color:var(--text-0)]"
-            >
-              See seasons
-            </Link>
-            <Link
-              href="/leaderboard"
-              className="ashfall-button-secondary rounded-md px-4 py-2 text-sm font-medium text-[color:var(--text-1)] hover:text-[color:var(--text-0)]"
-            >
-              View leaderboard
-            </Link>
-          </div>
-        </div>
-      </section>
+          <OrnamentDivider className="my-12 opacity-70" />
 
-      <section className="py-12 sm:py-16">
-        <div className="mx-auto max-w-[1320px] px-4">
           <div className="text-xs tracking-[0.32em] text-[color:var(--text-2)]">
             SEASONAL TRIALS
           </div>
           <h2 className="ashfall-display mt-3 text-balance text-3xl text-[color:var(--text-0)] sm:text-4xl">
-            Rank up over time. Prove it in real play.
+            Build your legacy. Prove you’re the best.
           </h2>
           <p className="mt-4 max-w-4xl text-pretty text-sm leading-relaxed text-[color:var(--text-1)] sm:text-base">
-            The bigger point of playing is mastery that stacks. Each season runs a set of
-            ranked trials—sieges, bosses, extractions, and objective holds—that raise your
-            rank as you show consistency.
+            Each season introduces a set of ranked challenges designed to surface the best-of-the-best.
+            Climb by winning the hardest moments—sieges, world bosses, extractions, and contested objectives—
+            then earn special, unique rewards that broadcast your rank everywhere you go.
           </p>
 
           <div className="mt-8 grid gap-4 lg:grid-cols-12">
@@ -726,11 +804,11 @@ export default function GamePage() {
                 <div className="relative px-5 py-5">
                   <div className="grid gap-3 text-sm text-[color:var(--text-1)]">
                     {[
-                      "Win sieges and repel sieges (offense + defense both matter).",
-                      "Down world bosses during high-threat windows.",
-                      "Extract with high-value loot under pursuit.",
-                      "Hold objectives in contested zones.",
-                      "Finish the week strong—finale participation counts.",
+                      "Siege Trials: win assaults and hold defenses (offense + defense both matter).",
+                      "Boss Trials: down world raid bosses during high-threat windows.",
+                      "Extraction Trials: extract with high-value loot under pursuit.",
+                      "Control Trials: hold objectives in contested zones.",
+                      "Finale Trials: finish the week strong—late-week pressure counts.",
                     ].map((x) => (
                       <div
                         key={x}
@@ -784,21 +862,121 @@ export default function GamePage() {
             COSMETIC LEGACY
           </div>
           <h2 className="ashfall-display mt-3 text-balance text-3xl text-[color:var(--text-0)] sm:text-4xl">
-            The stuff you keep. The stuff they fear.
+            Your stuff, your style, your story. Make it your own.
           </h2>
           <p className="mt-4 max-w-4xl text-pretty text-sm leading-relaxed text-[color:var(--text-1)] sm:text-base">
-            Earn permanent, siege-forward identity through seasonal rank and milestones—then show it off where it matters:
-            at the gates, on the walls, and in the breach.
+            Cosmetics are the long game. Every season you chase moments that turn into identity—permanent unlocks that
+            don’t get wiped, don’t get power-crept, and don’t ask you to no-life the game. When the gates open and the
+            raid window hits, your look tells a story: where you’ve been, what you’ve beaten, and who learned to fear you.
           </p>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-4 lg:grid-cols-12">
+            <div className="lg:col-span-5">
+              <div className="ashfall-panel">
+                <div className="relative border-b border-[color:var(--border-subtle)] px-5 py-4">
+                  <div className="ashfall-display text-sm font-semibold text-[color:var(--text-0)]">
+                    Why cosmetics drive replayability
+                  </div>
+                  <div className="mt-1 text-sm text-[color:var(--text-2)]">
+                    Power resets. Identity stacks.
+                  </div>
+                </div>
+                <div className="relative px-5 py-5">
+                  <ul className="grid gap-3 text-sm text-[color:var(--text-1)]">
+                    <li>
+                      <span className="text-[color:var(--text-0)] font-semibold">Seasonal chase</span>: each season adds new sets, themes, and trophies.
+                    </li>
+                    <li>
+                      <span className="text-[color:var(--text-0)] font-semibold">Skill-locked</span>: the rarest looks come from the hardest moments.
+                    </li>
+                    <li>
+                      <span className="text-[color:var(--text-0)] font-semibold">Always relevant</span>: cosmetics don’t get invalidated by new gear tiers.
+                    </li>
+                    <li>
+                      <span className="text-[color:var(--text-0)] font-semibold">Social signal</span>: you can read someone’s story at a glance.
+                    </li>
+                  </ul>
+                  <div className="mt-4 text-xs tracking-[0.22em] text-[color:var(--text-2)]">
+                    If it looks expensive, it should have a story.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-7">
+              <div className="ashfall-panel">
+                <div className="relative border-b border-[color:var(--border-subtle)] px-5 py-4">
+                  <div className="ashfall-display text-sm font-semibold text-[color:var(--text-0)]">
+                    How you earn them
+                  </div>
+                  <div className="mt-1 text-sm text-[color:var(--text-2)]">
+                    Build a legacy through real play.
+                  </div>
+                </div>
+                <div className="relative px-5 py-5">
+                  <div className="grid gap-3 text-sm text-[color:var(--text-1)] sm:grid-cols-2">
+                    {[
+                      "Seasonal Trials ranks + milestones",
+                      "World raid boss trophies + weekly clears",
+                      "Siege offense/defense accomplishments",
+                      "Extraction streaks and high-value turn-ins",
+                      "Zone control and contested hotspot wins",
+                      "Event chains and rare destination completions",
+                    ].map((x) => (
+                      <div
+                        key={x}
+                        className="rounded-xl border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-1)_55%,transparent)] px-4 py-3"
+                      >
+                        {x}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 text-xs tracking-[0.22em] text-[color:var(--text-2)]">
+                    Cosmetics are permanent. The proof is how you got them.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { k: "Base skins", v: "Walls, doors, lights, banners, themes." },
-              { k: "Hero skins", v: "Armor sets + readability-safe silhouettes." },
-              { k: "Turret skins", v: "Defenses, towers, trap cosmetics." },
-              { k: "Siege unit skins", v: "Rams, casters, breach gear styling." },
-              { k: "Mount variations", v: "Mount skins, tack, prestige trims." },
-              { k: "Hero effects", v: "Ability VFX, trails, kill effects (clarity-safe)." },
+              {
+                k: "Base themes",
+                v: "Walls, doors, lighting, banners, vault room skins, siege scars.",
+              },
+              {
+                k: "Hero skins",
+                v: "Armor sets + silhouette-safe variants per archetype and season.",
+              },
+              {
+                k: "Turret & trap skins",
+                v: "Defenses styled to match your base theme—still readable in combat.",
+              },
+              {
+                k: "Siege kit skins",
+                v: "Rams, breachers, charges, and modules with seasonal identity.",
+              },
+              {
+                k: "Mount variations",
+                v: "Mount skins, tack, trails, and prestige trims for parade moments.",
+              },
+              {
+                k: "Ability VFX",
+                v: "Clarity-safe spell effects, trails, auras, and finisher flourishes.",
+              },
+              {
+                k: "Titles & banners",
+                v: "Season tags, boss-slayer titles, siege honors, leaderboard trims.",
+              },
+              {
+                k: "Emotes & victory poses",
+                v: "Post-fight flexes and squad rituals that make clips iconic.",
+              },
+              {
+                k: "Base trophies",
+                v: "Boss heads, relic plinths, siege pennants—displayed in your stronghold.",
+              },
             ].map((x) => (
               <div key={x.k} className="ashfall-panel">
                 <div className="relative border-b border-[color:var(--border-subtle)] px-5 py-4">
@@ -815,7 +993,22 @@ export default function GamePage() {
         </div>
       </section>
 
-      <ZoneCarousel />
+      <ZoneCarousel
+        preface={{
+          eyebrow: "THE MAP",
+          title: "One continent. Many biomes. Endless destinations.",
+          description:
+            "Ashfall takes place on a single massive continent split into distinct biomes—each with its own weather, routes, threats, and must-know destinations. Every zone is built around places worth riding toward: strongholds, dungeons, boss lairs, extraction paths, and siege-worthy choke points.",
+          bullets: [
+            "Biome identity: unique hazards, visibility, and traversal.",
+            "Landmarks: memorable POIs that become fight magnets.",
+            "Destinations: dungeons, strongholds, and world-boss arenas.",
+            "Routes: safe paths, fast paths, and risky paths.",
+            "Resource pockets: materials you can build a base from.",
+            "Choke points: places where sieges and ambushes make sense.",
+          ],
+        }}
+      />
     </div>
   );
 }
