@@ -5,27 +5,32 @@ import { GarrisonSpotlight } from "@/components/site/GarrisonSpotlight";
 import { WorldBossSpotlight } from "@/components/site/WorldBossSpotlight";
 
 export default function Home() {
+  const betaSignupHref =
+    "mailto:beta@ashfall.game?subject=Ashfall%20Beta%20Signup&body=I%27d%20like%20to%20sign%20up%20for%20the%20Ashfall%20beta.%0A%0AName%3A%0AEmail%3A%0ARegion%3A%0APlatform%3A%20PC%0A%0APlaystyle%3A%20Solo%20%2F%20Duo%20%2F%20Squad";
+  const betaSignupCount = 12438;
+  const betaSignupCountLabel = betaSignupCount.toLocaleString();
+
   return (
     <div>
       <Hero
-        eyebrow="Ashfall"
-        title="Survive. Ascend. Siege."
-        subtitle="Hero-first survival with WoW-like ability combat, mounted speed, and a homestead that fuels raids—not chores."
+        title="ASHFALL"
+        subtitle="Loot. Level. Siege. Become a Legend."
         background="world"
+        variant="home"
+        titleSize="brand"
+        showDivider={false}
+        align="center"
       >
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href="/map"
-            className="ashfall-button-primary rounded-md px-4 py-2 text-sm font-medium text-[color:var(--text-0)]"
+        <div className="mt-2 text-center">
+          <a
+            href={betaSignupHref}
+            className="ashfall-button-cta inline-flex items-center justify-center rounded-xl px-8 py-5 text-center text-lg font-extrabold tracking-[0.18em] sm:px-10 sm:py-6 sm:text-xl"
           >
-            Explore the world
-          </Link>
-          <Link
-            href="/classes"
-            className="ashfall-button-secondary rounded-md px-4 py-2 text-sm font-medium text-[color:var(--text-1)] hover:text-[color:var(--text-0)]"
-          >
-            Meet the classes
-          </Link>
+            SIGN UP FOR BETA
+          </a>
+          <div className="mt-6 text-sm font-bold tracking-[0.1em] text-[color:var(--text-0)]">
+            {betaSignupCountLabel} raiders have answered the call
+          </div>
         </div>
       </Hero>
 

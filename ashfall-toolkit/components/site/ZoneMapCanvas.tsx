@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { OrnamentDivider } from "@/components/site/OrnamentDivider";
 import { getZoneMap, type ZoneMapId, type MapMarker } from "@/lib/zoneMaps";
 
@@ -29,6 +29,7 @@ type NodeLayerTuning = {
 
 type ZoneLayerTuning = NodeLayerTuning & {
   zoneRadius: number; // 0.4..2.4 (big on-map zone circle)
+  areaOpacity: number; // 0..0.8 (area fill + outline opacity)
 };
 
 type BaseLayerTuning = {
@@ -46,13 +47,29 @@ type LayerTuningState = {
 
 const defaultTuning: LayerTuningState = {
   harvest: { hue: 145, nodeSize: 1.0, nodeRadius: 1.0, outerEnabled: true },
-  event: { hue: 45, nodeSize: 1.0, nodeRadius: 1.0, outerEnabled: true, zoneRadius: 1.0 },
-  raidBoss: { hue: 0, nodeSize: 1.0, nodeRadius: 1.0, outerEnabled: true, zoneRadius: 1.0 },
+  event: {
+    hue: 45,
+    nodeSize: 1.0,
+    nodeRadius: 1.0,
+    outerEnabled: true,
+    zoneRadius: 1.0,
+    areaOpacity: 0.14,
+  },
+  raidBoss: {
+    hue: 0,
+    nodeSize: 1.0,
+    nodeRadius: 1.0,
+    outerEnabled: true,
+    zoneRadius: 1.0,
+    areaOpacity: 0.12,
+  },
   base: { hue: 38, size: 1.0, radius: 1.0 },
 };
 
 export function ZoneMapCanvas(props: Props) {
   const zone = getZoneMap(props.zoneId);
+  const STORAGE_KEY = `ashfall:zoneMapSettings:v1:${props.zoneId}`;
+  const DEFAULT_KEY = `ashfall:zoneMapDefaults:v1:${props.zoneId}`;
 
   const [optionsOpen, setOptionsOpen] = useState(false);
   const [layers, setLayers] = useState<Record<LayerId, boolean>>({
@@ -65,6 +82,154 @@ export function ZoneMapCanvas(props: Props) {
   const [tuning, setTuning] = useState<LayerTuningState>(defaultTuning);
   const [mapOpacity, setMapOpacity] = useState(0.92);
   const [mapScale, setMapScale] = useState(1.0);
+
+  const hasHydratedRef = useRef(false);
+
+  type StoredStateV1 = {
+    layers?: Partial<Record<LayerId, boolean>>;
+    tuning?: Partial<LayerTuningState>;
+    mapOpacity?: number;
+    mapScale?: number;
+    optionsOpen?: boolean;
+  };
+
+  const applyStoredState = useCallback((parsed: StoredStateV1) => {
+    if (parsed.layers && typeof parsed.layers === "object") {
+      setLayers((prev) => ({
+        ...prev,
+        ...parsed.layers,
+      }));
+    }
+
+    if (typeof parsed.mapOpacity === "number") {
+      setMapOpacity(clamp(parsed.mapOpacity, 0.4, 1));
+    }
+    if (typeof parsed.mapScale === "number") {
+      setMapScale(clamp(parsed.mapScale, 0.85, 1.35));
+    }
+    if (typeof parsed.optionsOpen === "boolean") {
+      setOptionsOpen(parsed.optionsOpen);
+    }
+
+    if (parsed.tuning && typeof parsed.tuning === "object") {
+      setTuning((prev) => {
+        const next: LayerTuningState = {
+          harvest: {
+            ...prev.harvest,
+            ...(parsed.tuning?.harvest ?? {}),
+          },
+          event: {
+            ...prev.event,
+            ...(parsed.tuning?.event ?? {}),
+          },
+          raidBoss: {
+            ...prev.raidBoss,
+            ...(parsed.tuning?.raidBoss ?? {}),
+          },
+          base: {
+            ...prev.base,
+            ...(parsed.tuning?.base ?? {}),
+          },
+        };
+
+        // Clamp key fields to prevent weird values from older schemas.
+        next.harvest.hue = clamp(next.harvest.hue, 0, 360);
+        next.harvest.nodeSize = clamp(next.harvest.nodeSize, 0.6, 2.4);
+        next.harvest.nodeRadius = clamp(next.harvest.nodeRadius, 0.6, 2.4);
+        next.harvest.outerEnabled = Boolean(next.harvest.outerEnabled);
+
+        next.event.hue = clamp(next.event.hue, 0, 360);
+        next.event.nodeSize = clamp(next.event.nodeSize, 0.6, 2.4);
+        next.event.nodeRadius = clamp(next.event.nodeRadius, 0.6, 2.4);
+        next.event.outerEnabled = Boolean(next.event.outerEnabled);
+        next.event.zoneRadius = clamp(next.event.zoneRadius, 0.05, 2);
+        next.event.areaOpacity = clamp(next.event.areaOpacity, 0, 0.8);
+
+        next.raidBoss.hue = clamp(next.raidBoss.hue, 0, 360);
+        next.raidBoss.nodeSize = clamp(next.raidBoss.nodeSize, 0.6, 2.4);
+        next.raidBoss.nodeRadius = clamp(next.raidBoss.nodeRadius, 0.6, 2.4);
+        next.raidBoss.outerEnabled = Boolean(next.raidBoss.outerEnabled);
+        next.raidBoss.zoneRadius = clamp(next.raidBoss.zoneRadius, 0.05, 2);
+        next.raidBoss.areaOpacity = clamp(next.raidBoss.areaOpacity, 0, 0.8);
+
+        next.base.hue = clamp(next.base.hue, 0, 360);
+        next.base.size = clamp(next.base.size, 0.6, 2.4);
+        next.base.radius = clamp(next.base.radius, 0.6, 2.4);
+
+        return next;
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      const defaultsRaw = localStorage.getItem(DEFAULT_KEY);
+      if (defaultsRaw) {
+        applyStoredState(JSON.parse(defaultsRaw) as StoredStateV1);
+      }
+
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+
+      // If you already have a tuned/cached setup, promote it to "defaults" once.
+      if (!defaultsRaw) {
+        try {
+          localStorage.setItem(DEFAULT_KEY, raw);
+        } catch {
+          // ignore
+        }
+      }
+
+      applyStoredState(JSON.parse(raw) as StoredStateV1);
+    } catch {
+      // ignore corrupted cache
+    } finally {
+      hasHydratedRef.current = true;
+    }
+  }, [DEFAULT_KEY, STORAGE_KEY, applyStoredState]);
+
+  const saveAsDefaults = () => {
+    const payload: StoredStateV1 = {
+      layers,
+      tuning,
+      mapOpacity,
+      mapScale,
+      optionsOpen,
+    };
+    try {
+      localStorage.setItem(DEFAULT_KEY, JSON.stringify(payload));
+    } catch {
+      // ignore
+    }
+  };
+
+  const resetToDefaults = () => {
+    try {
+      const raw = localStorage.getItem(DEFAULT_KEY);
+      if (!raw) return;
+      applyStoredState(JSON.parse(raw) as StoredStateV1);
+    } catch {
+      // ignore
+    }
+  };
+
+  useEffect(() => {
+    if (!hasHydratedRef.current) return;
+
+    const payload: StoredStateV1 = {
+      layers,
+      tuning,
+      mapOpacity,
+      mapScale,
+      optionsOpen,
+    };
+
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    } catch {
+      // ignore quota / privacy mode
+    }
+  }, [STORAGE_KEY, layers, tuning, mapOpacity, mapScale, optionsOpen]);
 
   const activeRaidBoss = useMemo(
     () => zone.markers.find((m) => m.type === "raidBoss" && m.status === "active"),
@@ -90,7 +255,8 @@ export function ZoneMapCanvas(props: Props) {
   const harvestColor = hsl(tuning.harvest.hue, 72, 62, 1);
   const eventColor = hsl(tuning.event.hue, 78, 58, 1);
   const raidColor = hsl(tuning.raidBoss.hue, 86, 58, 1);
-  const baseTint = hsl(tuning.base.hue, 35, 52, 0.18);
+  const baseFill = hsl(tuning.base.hue, 45, 56, 0.42);
+  const baseStroke = hsl(tuning.base.hue, 55, 64, 0.55);
 
   const nodeInnerPx = {
     harvest: Math.round(8 * tuning.harvest.nodeSize),
@@ -111,6 +277,7 @@ export function ZoneMapCanvas(props: Props) {
 
   const baseCorner = clamp(6 * tuning.base.radius, 2, 16);
   const baseScale = clamp(tuning.base.size, 0.5, 2.5);
+  const baseCellPx = clamp(Math.round(10 * baseScale), 8, 20);
 
   return (
     <section className="pb-16">
@@ -151,10 +318,23 @@ export function ZoneMapCanvas(props: Props) {
                     .map((m) => {
                       const isEvent = m.type === "event";
                       const isBoss = m.type === "raidBoss";
+                      const areaEnabled = isEvent
+                        ? tuning.event.outerEnabled
+                        : isBoss
+                          ? tuning.raidBoss.outerEnabled
+                          : true;
+                      if (!areaEnabled) return null;
                       const scale = isEvent ? eventAreaScale : raidAreaScale;
                       const rRaw = (m.areaRadius ?? 0) * 2 * scale;
                       // Guardrail: avoid accidental "covers the whole map" circles.
-                      const r = clamp(rRaw, 0, 140);
+                      const r = clamp(rRaw, 0, 90);
+                      const areaOpacity = clamp(
+                        isEvent ? tuning.event.areaOpacity : tuning.raidBoss.areaOpacity,
+                        0,
+                        0.8,
+                      );
+                      const outlineOpacity = areaOpacity;
+                      const gradientOpacity = clamp(areaOpacity * 1.4, 0, 0.55);
 
                       return (
                         <div
@@ -167,9 +347,13 @@ export function ZoneMapCanvas(props: Props) {
                             className="relative rounded-full"
                             style={{
                               aspectRatio: "1 / 1",
-                              border: isBoss ? `3px solid ${hsl(tuning.raidBoss.hue, 86, 58, 0.52)}` : `2px solid ${hsl(tuning.event.hue, 78, 58, 0.48)}`,
-                              backgroundColor: isBoss ? hsl(tuning.raidBoss.hue, 86, 58, 0.12) : hsl(tuning.event.hue, 78, 58, 0.14),
-                              boxShadow: `0 0 0 1px rgba(0,0,0,0.32) inset, 0 0 ${isBoss ? 110 : 80}px ${hsl(isBoss ? tuning.raidBoss.hue : tuning.event.hue, 85, 58, isBoss ? 0.18 : 0.14)}`,
+                              border: isBoss
+                                ? `3px solid ${hsl(tuning.raidBoss.hue, 86, 58, outlineOpacity)}`
+                                : `2px solid ${hsl(tuning.event.hue, 78, 58, outlineOpacity)}`,
+                              backgroundColor: isBoss
+                                ? hsl(tuning.raidBoss.hue, 86, 58, areaOpacity)
+                                : hsl(tuning.event.hue, 78, 58, areaOpacity),
+                              boxShadow: `0 0 0 1px rgba(0,0,0,0.32) inset, 0 0 ${isBoss ? 110 : 80}px ${hsl(isBoss ? tuning.raidBoss.hue : tuning.event.hue, 85, 58, clamp(areaOpacity * 0.9, 0, 0.55))}`,
                             }}
                           >
                             <div
@@ -179,19 +363,23 @@ export function ZoneMapCanvas(props: Props) {
                                   isBoss ? tuning.raidBoss.hue : tuning.event.hue,
                                   86,
                                   58,
-                                  isBoss ? 0.22 : 0.18,
+                                  gradientOpacity,
                                 )}, ${hsl(isBoss ? tuning.raidBoss.hue : tuning.event.hue, 86, 58, 0)} 64%)`,
                               }}
                             />
-                            {isBoss ? (
-                              <div
-                                className="raidPulse absolute inset-0 rounded-full"
-                                style={{
-                                  border: `2px solid ${hsl(tuning.raidBoss.hue, 86, 58, 0.55)}`,
-                                  boxShadow: "0 0 0 1px rgba(0, 0, 0, 0.35) inset",
-                                }}
-                              />
-                            ) : null}
+                            <div
+                              className="areaPulse absolute inset-0 rounded-full"
+                              style={{
+                                border: `2px solid ${hsl(
+                                  isBoss ? tuning.raidBoss.hue : tuning.event.hue,
+                                  86,
+                                  58,
+                                  clamp(outlineOpacity * 1.6, 0, 0.85),
+                                )}`,
+                                boxShadow: "0 0 0 1px rgba(0, 0, 0, 0.35) inset",
+                                animationDuration: isBoss ? "1.55s" : "1.9s",
+                              }}
+                            />
                             <div
                               className="pointer-events-none absolute inset-0 rounded-full"
                               style={{ outline: `1px solid rgba(0,0,0,0.18)` }}
@@ -205,35 +393,52 @@ export function ZoneMapCanvas(props: Props) {
                 {/* Overlays: bases */}
                 <div className="absolute inset-0">
                   {visibleMarkers
-                    .filter((m) => m.type === "base" && typeof m.w === "number" && typeof m.h === "number")
-                    .map((m) => (
-                      <div
-                        key={`${m.id}-base`}
-                        className="baseOverlay group absolute"
-                        style={{ left: `${m.x}%`, top: `${m.y}%` }}
-                      >
+                    .filter((m) => m.type === "base" && Array.isArray(m.cells) && m.cells.length > 0)
+                    .map((m) => {
+                      const cells = (m.cells ?? []).map((c) => ({ x: c.x, y: c.y }));
+                      const minX = Math.min(...cells.map((c) => c.x));
+                      const minY = Math.min(...cells.map((c) => c.y));
+                      const maxX = Math.max(...cells.map((c) => c.x));
+                      const cols = maxX - minX + 1;
+
+                      const normalized = cells.map((c) => ({
+                        x: c.x - minX,
+                        y: c.y - minY,
+                      }));
+
+                      return (
                         <div
-                          className="relative -translate-x-1/2 -translate-y-1/2"
-                          style={{
-                            width: `${(m.w ?? 0) * baseScale}%`,
-                            height: `${(m.h ?? 0) * baseScale}%`,
-                          }}
+                          key={`${m.id}-base`}
+                          className="baseOverlay group absolute z-40"
+                          style={{ left: `${m.x}%`, top: `${m.y}%` }}
                         >
-                          <div
-                            className="absolute inset-0 border border-[color:color-mix(in_oklab,var(--border-subtle)_55%,transparent)] shadow-[0_10px_30px_rgba(0,0,0,0.25)] backdrop-blur-[2px]"
-                            style={{
-                              borderRadius: `${baseCorner}px`,
-                              backgroundColor: baseTint,
-                            }}
-                          />
-                          <div
-                            className="pointer-events-none absolute inset-0 ring-1 ring-inset"
-                            style={{
-                              borderRadius: `${baseCorner}px`,
-                              borderColor: hsl(tuning.base.hue, 55, 60, 0.12),
-                            }}
-                          />
-                        </div>
+                          <div className="relative -translate-x-1/2 -translate-y-1/2">
+                            <div
+                              className="grid gap-[2px]"
+                              style={{
+                                gridTemplateColumns: `repeat(${cols}, ${baseCellPx}px)`,
+                                gridAutoRows: `${baseCellPx}px`,
+                                padding: 0,
+                                borderRadius: 0,
+                                background: "transparent",
+                                border: "0",
+                              }}
+                            >
+                              {normalized.map((c, idx) => (
+                                <div
+                                  key={`${m.id}-cell-${idx}`}
+                                  style={{
+                                    gridColumnStart: c.x + 1,
+                                    gridRowStart: c.y + 1,
+                                    borderRadius: Math.max(2, Math.floor(baseCorner / 2)),
+                                    background: `linear-gradient(180deg, rgba(255,255,255,0.10), rgba(0,0,0,0.04)), ${baseFill}`,
+                                    border: `1px solid ${baseStroke}`,
+                                    boxShadow: "0 6px 14px rgba(0,0,0,0.25)",
+                                  }}
+                                />
+                              ))}
+                            </div>
+                          </div>
 
                         <div className="pointer-events-none absolute left-1/2 top-0 z-20 w-56 -translate-x-1/2 -translate-y-[calc(100%+10px)] opacity-0 transition-opacity group-hover:opacity-100">
                           <div className="rounded-2xl border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-0)_78%,transparent)] px-4 py-3 text-[color:var(--text-1)] shadow-[0_18px_40px_rgba(0,0,0,0.45)] backdrop-blur-md">
@@ -241,12 +446,16 @@ export function ZoneMapCanvas(props: Props) {
                             <div className="ashfall-display mt-1 text-base text-[color:var(--text-0)]">
                               {m.name}
                             </div>
-                            {m.detail ? <div className="mt-2 text-sm text-[color:var(--text-1)]">{m.detail}</div> : null}
+                            <div className="mt-2 text-sm text-[color:var(--text-1)]">
+                              {m.detail ? `${m.detail} • ` : ""}
+                              {cells.length} cells
+                            </div>
                           </div>
                           <div className="mx-auto mt-2 h-2 w-2 rotate-45 border-b border-r border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-0)_78%,transparent)]" />
                         </div>
-                      </div>
-                    ))}
+                        </div>
+                      );
+                    })}
                 </div>
 
                 {/* Markers */}
@@ -366,6 +575,28 @@ export function ZoneMapCanvas(props: Props) {
                         <>
                           <OrnamentDivider className="mt-5 opacity-70" />
 
+                          <div className="mt-4 grid gap-2">
+                            <div className="flex flex-wrap gap-2">
+                              <button
+                                type="button"
+                                onClick={saveAsDefaults}
+                                className="rounded-full border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-1)_40%,transparent)] px-3 py-1 text-[10px] tracking-[0.22em] text-[color:var(--text-1)] hover:border-[color:var(--border-accent)]"
+                              >
+                                SAVE AS DEFAULTS
+                              </button>
+                              <button
+                                type="button"
+                                onClick={resetToDefaults}
+                                className="rounded-full border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-1)_30%,transparent)] px-3 py-1 text-[10px] tracking-[0.22em] text-[color:var(--text-1)] hover:border-[color:var(--border-accent)]"
+                              >
+                                RESET TO DEFAULTS
+                              </button>
+                            </div>
+                            <div className="text-[10px] leading-relaxed text-[color:var(--text-2)]">
+                              Defaults apply when you clear settings or reset.
+                            </div>
+                          </div>
+
                           <div className="mt-4 grid gap-3">
                             <details className="group rounded-xl border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-1)_28%,transparent)] px-3 py-3">
                               <summary className="cursor-pointer list-none select-none">
@@ -416,6 +647,7 @@ export function ZoneMapCanvas(props: Props) {
                                   nodeSize={tuning.event.nodeSize}
                                   nodeRadius={tuning.event.nodeRadius}
                                   zoneRadius={tuning.event.zoneRadius}
+                                  areaOpacity={tuning.event.areaOpacity}
                                   outerEnabled={tuning.event.outerEnabled}
                                   showNodeRadius={false}
                                   onChange={(next) =>
@@ -446,6 +678,7 @@ export function ZoneMapCanvas(props: Props) {
                                   nodeSize={tuning.raidBoss.nodeSize}
                                   nodeRadius={tuning.raidBoss.nodeRadius}
                                   zoneRadius={tuning.raidBoss.zoneRadius}
+                                  areaOpacity={tuning.raidBoss.areaOpacity}
                                   outerEnabled={tuning.raidBoss.outerEnabled}
                                   showNodeRadius={false}
                                   onChange={(next) =>
@@ -537,23 +770,22 @@ export function ZoneMapCanvas(props: Props) {
         </div>
 
         <style>{`
-          .raidPulse {
-            border: 2px solid rgba(239, 68, 68, 0.55);
-            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35) inset;
-            animation: ashfallPulseScale 1.6s ease-in-out infinite;
+          .areaPulse {
+            pointer-events: none;
+            animation: ashfallAreaPulse 1.8s ease-out infinite;
             opacity: 0.95;
+            will-change: transform, opacity;
           }
-          @keyframes ashfallPulseScale {
+          @keyframes ashfallAreaPulse {
             0% {
-              transform: scale(0.72);
-              opacity: 0.85;
+              transform: scale(0.02);
+              opacity: 0.9;
             }
-            60% {
-              transform: scale(1);
-              opacity: 0.2;
+            70% {
+              opacity: 0.15;
             }
             100% {
-              transform: scale(1.06);
+              transform: scale(1);
               opacity: 0;
             }
           }
@@ -601,10 +833,12 @@ function NodeOptionsSection(props: {
   nodeSize: number;
   nodeRadius: number;
   zoneRadius?: number;
+  areaOpacity?: number;
   outerEnabled: boolean;
   showNodeRadius?: boolean;
   onChange: (
-    next: Partial<NodeLayerTuning> & Partial<Pick<ZoneLayerTuning, "zoneRadius">>,
+    next: Partial<NodeLayerTuning> &
+      Partial<Pick<ZoneLayerTuning, "zoneRadius" | "areaOpacity">>,
   ) => void;
 }) {
   const hasArea = typeof props.zoneRadius === "number";
@@ -666,11 +900,22 @@ function NodeOptionsSection(props: {
           <SliderRow
             label="Area radius"
             value={props.zoneRadius ?? 1}
-            min={0.25}
-            max={8}
+            min={0.05}
+            max={2}
             step={0.05}
             display={`${Math.round((props.zoneRadius ?? 1) * 100)}%`}
             onChange={(v) => props.onChange({ zoneRadius: v })}
+          />
+        ) : null}
+        {hasArea ? (
+          <SliderRow
+            label="Area opacity"
+            value={props.areaOpacity ?? 0.14}
+            min={0}
+            max={0.8}
+            step={0.01}
+            display={`${Math.round((props.areaOpacity ?? 0.14) * 100)}%`}
+            onChange={(v) => props.onChange({ areaOpacity: v })}
           />
         ) : null}
       </div>
@@ -767,7 +1012,6 @@ function MarkerButton(props: {
   const m = props.marker;
   const isHarvest = m.type === "harvest";
   const isEvent = m.type === "event";
-  const isBoss = m.type === "raidBoss";
 
   const outerRadius = isHarvest
     ? props.nodeOuterRadiusPx.harvest

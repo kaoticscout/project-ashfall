@@ -17,8 +17,13 @@ export type MapMarker = {
    */
   status?: "active" | "inactive";
   /**
-   * Base footprint size (percent of map width/height).
+   * Base footprint cells (grid offsets).
    * Used when `type === "base"`.
+   */
+  cells?: Array<{ x: number; y: number }>;
+  /**
+   * Optional base footprint size, in percent of map width/height.
+   * Used by the map renderer for rectangular base overlays.
    */
   w?: number;
   h?: number;
@@ -196,14 +201,106 @@ export const zoneMaps: Record<ZoneMapId, ZoneMap> = {
       },
 
       // Player bases (placed to avoid nodes + event/raid zones)
-      { id: "base-01", type: "base", name: "Homestead", detail: "Small build", w: 1.8, h: 1.2, x: 7.0, y: 40.0 },
-      { id: "base-02", type: "base", name: "Homestead", detail: "Small build", w: 2.2, h: 1.6, x: 28.0, y: 18.0 },
-      { id: "base-03", type: "base", name: "Homestead", detail: "Medium build", w: 2.8, h: 2.0, x: 60.0, y: 18.0 },
-      { id: "base-04", type: "base", name: "Homestead", detail: "Medium build", w: 3.4, h: 2.4, x: 95.0, y: 24.0 },
-      { id: "base-05", type: "base", name: "Homestead", detail: "Small build", w: 2.0, h: 1.5, x: 6.0, y: 83.0 },
-      { id: "base-06", type: "base", name: "Homestead", detail: "Large build", w: 4.4, h: 3.2, x: 95.0, y: 78.0 },
-      { id: "base-07", type: "base", name: "Homestead", detail: "Medium build", w: 3.0, h: 2.2, x: 48.0, y: 88.0 },
-      { id: "base-08", type: "base", name: "Homestead", detail: "Small build", w: 1.6, h: 1.2, x: 52.0, y: 10.0 },
+      // Bases are made of adjacent "cells" (tiles). Keep shapes <= ~18 cells.
+      {
+        id: "base-01",
+        type: "base",
+        name: "Homestead",
+        detail: "2×2 core",
+        x: 32.0,
+        y: 58.0,
+        cells: [
+          { x: 0, y: 0 },
+          { x: 1, y: 0 },
+          { x: 0, y: 1 },
+          { x: 1, y: 1 },
+        ],
+      },
+      {
+        id: "base-02",
+        type: "base",
+        name: "Homestead",
+        detail: "L‑shape (12 cells)",
+        x: 26.0,
+        y: 46.5,
+        cells: [
+          { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 },
+          { x: 0, y: 1 },
+          { x: 0, y: 2 },
+          { x: 0, y: 3 },
+          { x: 1, y: 3 }, { x: 2, y: 3 },
+          { x: 1, y: 2 }, { x: 2, y: 2 },
+          { x: 1, y: 1 },
+        ],
+      },
+      {
+        id: "base-03",
+        type: "base",
+        name: "Homestead",
+        detail: "3×6 longhall (18 cells)",
+        x: 34.0,
+        y: 70.0,
+        cells: Array.from({ length: 18 }, (_, i) => ({ x: i % 3, y: Math.floor(i / 3) })),
+      },
+      {
+        id: "base-04",
+        type: "base",
+        name: "Homestead",
+        detail: "4×3 with notch (11 cells)",
+        x: 72.0,
+        y: 46.0,
+        cells: [
+          { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 },
+          { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 3, y: 1 },
+          { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 },
+        ],
+      },
+      {
+        id: "base-05",
+        type: "base",
+        name: "Homestead",
+        detail: "Courtyard (13 cells)",
+        x: 40.0,
+        y: 60.0,
+        cells: [
+          { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 },
+          { x: 0, y: 1 }, { x: 3, y: 1 },
+          { x: 0, y: 2 }, { x: 3, y: 2 },
+          { x: 0, y: 3 }, { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 },
+          { x: 1, y: 1 },
+        ],
+      },
+      {
+        id: "base-06",
+        type: "base",
+        name: "Homestead",
+        detail: "6×3 camp (18 cells)",
+        x: 78.0,
+        y: 70.0,
+        cells: Array.from({ length: 18 }, (_, i) => ({ x: i % 6, y: Math.floor(i / 6) })),
+      },
+      {
+        id: "base-07",
+        type: "base",
+        name: "Homestead",
+        detail: "3×3 with hole (8 cells)",
+        x: 50.0,
+        y: 78.0,
+        cells: [
+          { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 },
+          { x: 0, y: 1 },               { x: 2, y: 1 },
+          { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 },
+        ],
+      },
+      {
+        id: "base-08",
+        type: "base",
+        name: "Homestead",
+        detail: "2×5 outpost (10 cells)",
+        x: 70.0,
+        y: 28.0,
+        cells: Array.from({ length: 10 }, (_, i) => ({ x: i % 2, y: Math.floor(i / 2) })),
+      },
     ],
   },
 };

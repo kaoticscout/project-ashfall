@@ -16,7 +16,7 @@ export default function SeasonsPage() {
       <LandingFeatureSection
         eyebrow="Season"
         title="Quarterly objectives. Weekly events. Permanent prestige."
-        subtitle="Each quarter brings a battle-pass track and objectives that keep each week meaningful—without pay-to-win power. This page visualizes rewards, ranks, and where a player sits on the ladder."
+        subtitle="Each quarter brings Seasonal Trials, a battle-pass track, and objectives that keep each week meaningful—without pay-to-win power. This page visualizes rewards, ranks, and long-term legacy."
         imageSrc="/assets/feature-seasons.svg"
         imageAlt="Seasons preview"
       >
@@ -268,7 +268,7 @@ export default function SeasonsPage() {
             Season reward catalog
           </h2>
           <p className="mt-3 max-w-3xl text-sm text-[color:var(--text-1)] sm:text-base">
-            Base/defense customization, armor and effect cosmetics, mount skins, and prestige identity.
+            Base skins, hero skins, turret skins, siege unit skins, mount variations, hero effects, and prestige identity.
           </p>
 
           <div className="mt-8 grid gap-6 lg:grid-cols-12">
@@ -284,9 +284,10 @@ export default function SeasonsPage() {
                 <div className="mt-4 grid gap-3 sm:grid-cols-2">
                   {[
                     "Walls & doors cosmetics",
-                    "Tower skins + muzzle flashes (safe)",
+                    "Turret skins + muzzle flashes (safe)",
                     "Trap skins + placement decals",
                     "Banners, lighting, props",
+                    "Siege unit skins (rams/casters/charges)",
                   ].map((x) => (
                     <div
                       key={x}

@@ -14,11 +14,12 @@ export function WorldBossSpotlight() {
             CO-OP PvE
           </div>
           <h2 className="ashfall-display mt-3 text-balance text-4xl text-[color:var(--text-0)] sm:text-5xl">
-            World bosses. One health bar. No mercy.
+            World raid bosses. Co-op. No PvP.
           </h2>
           <p className="mx-auto mt-4 max-w-3xl text-pretty text-base leading-relaxed text-[color:var(--text-1)] sm:text-lg">
-            Rally your faction, read the telegraphs, and burn together—cinematic PvE
-            fights that turn the whole shard into a moment.
+            Rally up, read the telegraphs, and burn together. Each player earns
+            their own loot—no ninja, no split—just a clean co-op kill and the
+            scramble to get home.
           </p>
         </div>
 

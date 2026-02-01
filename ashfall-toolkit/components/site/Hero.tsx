@@ -7,40 +7,101 @@ export function Hero(props: {
   subtitle?: string;
   children?: ReactNode;
   background?: "default" | "world";
+  variant?: "default" | "home";
+  titleSize?: "default" | "brand";
+  showDivider?: boolean;
+  align?: "left" | "center";
+  vertical?: "top" | "lower";
 }) {
   const bg =
     props.background === "world"
       ? "bg-[url('/assets/hero-world.svg')] bg-cover bg-center"
       : "";
 
+  // Keep the homepage hero spacing explicit (px-based) so we can precisely
+  // choreograph "gradient → title → black buffer → next section".
+  const sectionSizing = "";
+
+  const padding =
+    props.variant === "home"
+      ? "pt-[400px] pb-[100px]"
+      : "pb-10 pt-10 sm:pb-14 sm:pt-14";
+
+  const titleSize =
+    props.titleSize === "brand"
+      ? "text-6xl sm:text-7xl lg:text-8xl"
+      : "text-4xl sm:text-6xl";
+
+  const align = props.align ?? "left";
+  const alignText = align === "center" ? "text-center" : "";
+  const subtitleAlign = align === "center" ? "mx-auto" : "";
+  const overlay =
+    props.variant === "home"
+      ? "bg-[radial-gradient(520px_240px_at_50%_0%,rgba(120,160,255,0.16),transparent_62%),radial-gradient(1100px_520px_at_50%_0%,rgba(28,62,150,0.44),transparent_72%),linear-gradient(180deg,#050b1b_0px,#050b1b_320px,var(--bg-0)_440px,var(--bg-0)_100%)]"
+      : "bg-gradient-to-b from-[color:color-mix(in_oklab,var(--bg-0)_30%,transparent)] via-[color:color-mix(in_oklab,var(--bg-0)_85%,transparent)] to-[color:var(--bg-0)]";
+
+  const vertical = props.vertical ?? "top";
+  const contentVertical =
+    vertical === "lower" ? "flex min-h-full flex-col justify-end" : "";
+
+  const titleFx =
+    props.variant === "home" && props.titleSize === "brand"
+      ? "ashfall-title-home"
+      : "";
+
+  const subtitleFx =
+    props.variant === "home" && props.titleSize === "brand"
+      ? "ashfall-subtitle-home"
+      : "";
+
   return (
-    <section className={`relative overflow-hidden ${bg}`}>
+    <section className={`relative overflow-hidden ${bg} ${sectionSizing}`}>
       <div className="absolute inset-0">
         <div className="ashfall-bg-noise absolute inset-0" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[color:color-mix(in_oklab,var(--bg-0)_30%,transparent)] via-[color:color-mix(in_oklab,var(--bg-0)_85%,transparent)] to-[color:var(--bg-0)]" />
+        <div className={`absolute inset-0 ${overlay}`} />
       </div>
 
-      <div className="relative mx-auto max-w-[1320px] px-4 pb-10 pt-10 sm:pb-14 sm:pt-14">
+      <div
+        className={`relative mx-auto max-w-[1320px] px-4 ${padding} ${contentVertical}`}
+      >
+        <div>
         {props.eyebrow ? (
-          <div className="mb-4 text-xs tracking-[0.32em] text-[color:var(--text-2)]">
+          <div
+            className={`mb-4 text-xs tracking-[0.32em] text-[color:var(--text-2)] ${alignText}`}
+          >
             {props.eyebrow.toUpperCase()}
           </div>
         ) : null}
 
-        <h1 className="ashfall-display text-balance text-4xl font-semibold text-[color:var(--text-0)] sm:text-6xl">
+        <h1
+          className={`ashfall-display ${titleFx} text-balance font-semibold text-[color:var(--text-0)] ${titleSize} tracking-[0.08em] ${alignText}`}
+        >
           {props.title}
         </h1>
 
         {props.subtitle ? (
-          <p className="mt-4 max-w-3xl text-pretty text-base leading-relaxed text-[color:var(--text-1)] sm:text-lg">
+          <p
+            className={`mt-5 max-w-3xl text-pretty text-base leading-relaxed text-[color:var(--text-1)] sm:text-lg ${subtitleAlign} ${alignText} ${subtitleFx}`}
+          >
             {props.subtitle}
           </p>
         ) : null}
 
-        {props.children ? <div className="mt-6">{props.children}</div> : null}
+        {props.children ? (
+          <div className={`mt-6 ${align === "center" ? "flex justify-center" : ""}`}>
+            {props.children}
+          </div>
+        ) : null}
+        </div>
       </div>
 
-      <OrnamentDivider className="relative -mt-2 opacity-80" />
+      {props.showDivider === false ? null : (
+        <OrnamentDivider
+          className={`relative opacity-80 ${
+            props.variant === "home" ? "-mt-4" : "-mt-2"
+          }`}
+        />
+      )}
     </section>
   );
 }

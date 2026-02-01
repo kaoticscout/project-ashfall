@@ -108,6 +108,25 @@ body {
   letter-spacing: 0.02em;
 }
 
+.ashfall-title-home {
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.35),
+    0 18px 60px rgba(0, 0, 0, 0.55),
+    0 0 26px rgba(28, 62, 150, 0.28),
+    0 0 54px rgba(28, 62, 150, 0.18);
+}
+
+.ashfall-subtitle-home {
+  font-family: var(--font-display), ui-serif, Georgia, Cambria, "Times New Roman",
+    Times, serif;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: color-mix(in oklab, var(--text-0) 92%, var(--accent-gold) 8%);
+  text-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.55),
+    0 0 18px rgba(28, 62, 150, 0.18);
+}
+
 .ashfall-panel {
   position: relative;
   overflow: hidden;
@@ -146,6 +165,20 @@ body {
 
 .ashfall-button-primary:hover {
   box-shadow: var(--glow-gold);
+}
+
+.ashfall-button-cta {
+  border: 1px solid color-mix(in oklab, var(--accent-gold) 65%, transparent);
+  background: var(--accent-gold);
+  color: var(--text-0);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent-gold) 35%, transparent),
+    0 18px 60px color-mix(in oklab, var(--accent-gold) 22%, transparent);
+}
+
+.ashfall-button-cta:hover {
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent-gold) 55%, transparent),
+    0 0 40px color-mix(in oklab, var(--accent-gold) 28%, transparent),
+    0 24px 80px color-mix(in oklab, var(--accent-gold) 26%, transparent);
 }
 
 .ashfall-button-secondary {

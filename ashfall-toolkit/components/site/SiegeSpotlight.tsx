@@ -1,7 +1,4 @@
-import Link from "next/link";
-
 const YOUTUBE_ID = "hlSEfurleGA";
-const YOUTUBE_URL = `https://www.youtube.com/watch?v=${YOUTUBE_ID}`;
 const YOUTUBE_EMBED = `https://www.youtube-nocookie.com/embed/${YOUTUBE_ID}?rel=0&modestbranding=1`;
 
 export function SiegeSpotlight() {
