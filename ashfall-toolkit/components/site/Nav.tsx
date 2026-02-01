@@ -4,12 +4,28 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 
-const navItems = [
-  { href: "/game", label: "The Game" },
+type NavItem = {
+  href: string;
+  label: string;
+  note?: string;
+  children?: { href: string; label: string }[];
+};
+
+const navItems: NavItem[] = [
+  {
+    href: "/game",
+    label: "The Game",
+    children: [
+      { href: "/game/zones", label: "Zones" },
+      { href: "/game/siege-vehicles", label: "Siege vehicles" },
+      { href: "/game/events", label: "Events" },
+      { href: "/game/building-progression", label: "Building progression" },
+    ],
+  },
   { href: "/classes", label: "Classes" },
   { href: "/map", label: "World Map" },
   { href: "/leaderboard", label: "Leaderboard", note: "WIP" },
-] as const;
+];
 
 export function Nav() {
   const pathname = usePathname();
@@ -45,26 +61,65 @@ export function Nav() {
           <nav className="hidden items-center gap-2 sm:flex">
             {items.map((item) => {
               const active = isActive(item.href);
+              const hasChildren = Boolean(item.children?.length);
               return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-current={active ? "page" : undefined}
-                  className={`rounded-lg px-5 py-3 text-base font-semibold leading-none ${
-                    active
-                      ? "bg-[color:color-mix(in_oklab,var(--accent-gold)_14%,transparent)] text-[color:var(--text-0)]"
-                      : "text-[color:var(--text-1)] hover:bg-[color:color-mix(in_oklab,var(--bg-2)_55%,transparent)] hover:text-[color:var(--text-0)]"
-                  }`}
-                >
-                  <span className="inline-flex items-center gap-2">
-                    <span>{item.label}</span>
-                    {"note" in item ? (
-                      <span className="rounded-full border border-[color:color-mix(in_oklab,var(--accent-arcane)_34%,var(--border-subtle))] bg-[color:color-mix(in_oklab,var(--accent-arcane)_18%,transparent)] px-2 py-[2px] text-[10px] font-extrabold tracking-[0.22em] text-[color:var(--text-0)]">
-                        {item.note}
-                      </span>
-                    ) : null}
-                  </span>
-                </Link>
+                <div key={item.href} className="relative group">
+                  <Link
+                    href={item.href}
+                    aria-current={active ? "page" : undefined}
+                    className={`rounded-lg px-5 py-3 text-base font-semibold leading-none ${
+                      active
+                        ? "bg-[color:color-mix(in_oklab,var(--accent-gold)_14%,transparent)] text-[color:var(--text-0)]"
+                        : "text-[color:var(--text-1)] hover:bg-[color:color-mix(in_oklab,var(--bg-2)_55%,transparent)] hover:text-[color:var(--text-0)]"
+                    }`}
+                  >
+                    <span className="inline-flex items-center gap-2">
+                      <span>{item.label}</span>
+                      {item.note ? (
+                        <span className="rounded-full border border-[color:color-mix(in_oklab,var(--accent-arcane)_34%,var(--border-subtle))] bg-[color:color-mix(in_oklab,var(--accent-arcane)_18%,transparent)] px-2 py-[2px] text-[10px] font-extrabold tracking-[0.22em] text-[color:var(--text-0)]">
+                          {item.note}
+                        </span>
+                      ) : null}
+                      {hasChildren ? (
+                        <span
+                          aria-hidden="true"
+                          className="text-[color:color-mix(in_oklab,var(--text-2)_70%,transparent)]"
+                        >
+                          ▾
+                        </span>
+                      ) : null}
+                    </span>
+                  </Link>
+
+                  {hasChildren ? (
+                    <div className="pointer-events-none absolute left-0 top-full z-50 mt-2 w-[280px] translate-y-1 opacity-0 transition-all group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100">
+                      <div className="rounded-2xl border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-0)_92%,transparent)] p-2 shadow-[0_18px_60px_rgba(0,0,0,0.45)] backdrop-blur">
+                        <div className="px-3 pb-2 pt-2 text-[10px] font-extrabold tracking-[0.24em] text-[color:var(--text-2)]">
+                          THE GAME
+                        </div>
+                        <div className="grid gap-1">
+                          {item.children!.map((child) => {
+                            const childActive = isActive(child.href);
+                            return (
+                              <Link
+                                key={child.href}
+                                href={child.href}
+                                aria-current={childActive ? "page" : undefined}
+                                className={`rounded-xl px-3 py-2 text-sm font-semibold ${
+                                  childActive
+                                    ? "bg-[color:color-mix(in_oklab,var(--accent-gold)_14%,transparent)] text-[color:var(--text-0)]"
+                                    : "text-[color:var(--text-1)] hover:bg-[color:color-mix(in_oklab,var(--bg-2)_55%,transparent)] hover:text-[color:var(--text-0)]"
+                                }`}
+                              >
+                                {child.label}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
               );
             })}
           </nav>
@@ -103,27 +158,57 @@ export function Nav() {
               <div className="grid gap-2">
                 {items.map((item) => {
                   const active = isActive(item.href);
+                  const hasChildren = Boolean(item.children?.length);
                   return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={close}
-                      aria-current={active ? "page" : undefined}
-                      className={`rounded-xl border px-4 py-3 text-sm font-semibold ${
-                        active
-                          ? "border-[color:var(--border-accent)] bg-[color:color-mix(in_oklab,var(--accent-gold)_14%,transparent)] text-[color:var(--text-0)]"
-                          : "border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-1)_55%,transparent)] text-[color:var(--text-1)] hover:border-[color:var(--border-accent)] hover:text-[color:var(--text-0)]"
-                      }`}
-                    >
-                      <span className="flex items-center justify-between gap-3">
-                        <span>{item.label}</span>
-                        {"note" in item ? (
-                          <span className="shrink-0 rounded-full border border-[color:color-mix(in_oklab,var(--accent-arcane)_34%,var(--border-subtle))] bg-[color:color-mix(in_oklab,var(--accent-arcane)_18%,transparent)] px-2 py-[2px] text-[10px] font-extrabold tracking-[0.22em] text-[color:var(--text-0)]">
-                            {item.note}
+                    <div key={item.href} className="grid gap-2">
+                      <Link
+                        href={item.href}
+                        onClick={close}
+                        aria-current={active ? "page" : undefined}
+                        className={`rounded-xl border px-4 py-3 text-sm font-semibold ${
+                          active
+                            ? "border-[color:var(--border-accent)] bg-[color:color-mix(in_oklab,var(--accent-gold)_14%,transparent)] text-[color:var(--text-0)]"
+                            : "border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-1)_55%,transparent)] text-[color:var(--text-1)] hover:border-[color:var(--border-accent)] hover:text-[color:var(--text-0)]"
+                        }`}
+                      >
+                        <span className="flex items-center justify-between gap-3">
+                          <span className="inline-flex items-center gap-2">
+                            <span>{item.label}</span>
+                            {hasChildren ? (
+                              <span className="text-[color:var(--text-2)]">▾</span>
+                            ) : null}
                           </span>
-                        ) : null}
-                      </span>
-                    </Link>
+                          {item.note ? (
+                            <span className="shrink-0 rounded-full border border-[color:color-mix(in_oklab,var(--accent-arcane)_34%,var(--border-subtle))] bg-[color:color-mix(in_oklab,var(--accent-arcane)_18%,transparent)] px-2 py-[2px] text-[10px] font-extrabold tracking-[0.22em] text-[color:var(--text-0)]">
+                              {item.note}
+                            </span>
+                          ) : null}
+                        </span>
+                      </Link>
+
+                      {hasChildren ? (
+                        <div className="grid gap-1 pl-3">
+                          {item.children!.map((child) => {
+                            const childActive = isActive(child.href);
+                            return (
+                              <Link
+                                key={child.href}
+                                href={child.href}
+                                onClick={close}
+                                aria-current={childActive ? "page" : undefined}
+                                className={`rounded-xl border px-4 py-2 text-sm font-semibold ${
+                                  childActive
+                                    ? "border-[color:var(--border-accent)] bg-[color:color-mix(in_oklab,var(--accent-gold)_12%,transparent)] text-[color:var(--text-0)]"
+                                    : "border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-2)_55%,transparent)] text-[color:var(--text-1)] hover:border-[color:var(--border-accent)] hover:text-[color:var(--text-0)]"
+                                }`}
+                              >
+                                {child.label}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      ) : null}
+                    </div>
                   );
                 })}
                 <button

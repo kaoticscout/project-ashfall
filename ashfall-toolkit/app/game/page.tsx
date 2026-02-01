@@ -30,6 +30,65 @@ export default function GamePage() {
         </div>
       </Hero>
 
+      <section className="pt-10 pb-4">
+        <div className="mx-auto max-w-[1320px] px-4">
+          <div className="ashfall-panel">
+            <div className="relative border-b border-[color:var(--border-subtle)] px-5 py-4">
+              <div className="text-xs tracking-[0.32em] text-[color:var(--text-2)]">
+                THE GAME
+              </div>
+              <div className="ashfall-display mt-2 text-2xl text-[color:var(--text-0)]">
+                Explore these stubs
+              </div>
+            </div>
+            <div className="relative px-5 py-5">
+              <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+                {[
+                  {
+                    href: "/game/zones",
+                    title: "Zones",
+                    desc: "Biome identity, routes, POIs, and hotspots.",
+                  },
+                  {
+                    href: "/game/siege-vehicles",
+                    title: "Siege vehicles",
+                    desc: "Craft, deploy, and counter siege units.",
+                  },
+                  {
+                    href: "/game/events",
+                    title: "Events",
+                    desc: "Contested moments and weekly cadence.",
+                  },
+                  {
+                    href: "/game/building-progression",
+                    title: "Building progression",
+                    desc: "Tier ladder, defenses, and upgrades.",
+                  },
+                ].map((x) => (
+                  <Link
+                    key={x.href}
+                    href={x.href}
+                    className="group rounded-2xl border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-1)_65%,transparent)] p-4 hover:border-[color:var(--border-accent)]"
+                  >
+                    <div className="text-xs font-extrabold tracking-[0.22em] text-[color:var(--text-2)]">
+                      {x.title.toUpperCase()}
+                    </div>
+                    <div className="mt-2 text-sm text-[color:var(--text-1)] group-hover:text-[color:var(--text-0)]">
+                      {x.desc}
+                    </div>
+                    <div className="mt-4 text-sm text-[color:var(--accent-gold)] opacity-0 transition-opacity group-hover:opacity-100">
+                      Open →
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <OrnamentDivider className="mt-10 opacity-70" />
+        </div>
+      </section>
+
       <section className="pt-10 pb-4 ">
         <div className="mx-auto max-w-[1320px] px-4">
           <div className="text-xs tracking-[0.32em] text-[color:var(--text-2)]">
