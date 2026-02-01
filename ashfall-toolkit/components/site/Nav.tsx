@@ -5,6 +5,7 @@ const navItems = [
   { href: "/classes", label: "Classes" },
   { href: "/progression", label: "Progression" },
   { href: "/seasons", label: "Seasons" },
+  { href: "/leaderboard", label: "Leaderboard" },
 ] as const;
 
 export function Nav() {

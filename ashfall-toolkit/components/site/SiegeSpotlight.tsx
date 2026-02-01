@@ -45,22 +45,7 @@ export function SiegeSpotlight() {
             </div>
           </div>
 
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
-            <a
-              href={YOUTUBE_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="ashfall-button-primary rounded-md px-4 py-2 text-sm font-medium text-[color:var(--text-0)]"
-            >
-              Watch on YouTube
-            </a>
-            <Link
-              href="/progression"
-              className="ashfall-button-secondary rounded-md px-4 py-2 text-sm font-medium text-[color:var(--text-1)] hover:text-[color:var(--text-0)]"
-            >
-              How sieges fit the week
-            </Link>
-          </div>
+          {/* No CTAs here — keep it cinematic. */}
         </div>
       </div>
     </section>
