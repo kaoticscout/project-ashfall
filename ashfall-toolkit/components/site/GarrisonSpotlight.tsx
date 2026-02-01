@@ -1,3 +1,5 @@
+import { withBasePath } from "@/lib/withBasePath";
+
 const VIDEO_SRC = "/assets/Videos/Building.mp4";
 
 export function GarrisonSpotlight() {
@@ -31,7 +33,7 @@ export function GarrisonSpotlight() {
               <div className="relative pb-[56.25%]">
                 <video
                   className="absolute inset-0 h-full w-full object-cover"
-                  src={VIDEO_SRC}
+                  src={withBasePath(VIDEO_SRC)}
                   playsInline
                   muted
                   loop

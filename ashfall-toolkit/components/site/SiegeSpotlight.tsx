@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const YOUTUBE_ID = "hlSEfurleGA";
 const YOUTUBE_EMBED = `https://www.youtube-nocookie.com/embed/${YOUTUBE_ID}?rel=0&modestbranding=1`;
 
@@ -40,6 +42,15 @@ export function SiegeSpotlight() {
                 />
               </div>
             </div>
+          </div>
+
+          <div className="mx-auto mt-4 max-w-4xl text-center text-xs leading-relaxed text-[color:color-mix(in_oklab,var(--text-1)_92%,transparent)] sm:text-sm">
+            This footage is a mood reel to inspire Ashfall’s tone and visuals—not gameplay. For how
+            the game actually plays, see{" "}
+            <Link href="/game" className="underline underline-offset-4">
+              The Game
+            </Link>
+            .
           </div>
 
           {/* No CTAs here — keep it cinematic. */}

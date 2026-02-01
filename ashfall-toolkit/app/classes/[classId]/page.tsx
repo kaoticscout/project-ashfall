@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Hero } from "@/components/site/Hero";
 import { OrnamentDivider } from "@/components/site/OrnamentDivider";
 import { getHeroById, HERO_ARCHETYPES } from "@/lib/heroArchetypes";
+import { withBasePath } from "@/lib/withBasePath";
 
 type PageProps = {
   params: { classId: string };
@@ -38,6 +39,9 @@ export default function ClassDetailPage({ params }: PageProps) {
       </div>
     );
   }
+
+  const focusClass =
+    c.portraitFocus === "top" ? "object-top" : "object-center";
 
   return (
     <div>
@@ -89,11 +93,11 @@ export default function ClassDetailPage({ params }: PageProps) {
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[color:color-mix(in_oklab,var(--bg-0)_78%,transparent)]" />
                   <div className="relative aspect-[16/9] w-full">
                     <Image
-                      src={c.portraitSrc}
+                      src={withBasePath(c.portraitSrc)}
                       alt={`${c.name} portrait`}
                       fill
                       sizes="(min-width: 1024px) 55vw, 100vw"
-                      className="object-cover opacity-95"
+                      className={`object-cover opacity-95 ${focusClass}`}
                     />
                   </div>
                 </div>

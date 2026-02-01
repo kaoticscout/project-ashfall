@@ -25,21 +25,6 @@ export default function MapPage() {
                 Options to tune colors, sizes, and zone radius.
               </p>
             </div>
-
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href="/"
-                className="ashfall-button-secondary rounded-md px-4 py-2 text-sm font-medium text-[color:var(--text-1)] hover:text-[color:var(--text-0)]"
-              >
-                ← Back
-              </Link>
-              <Link
-                href="/seasons"
-                className="ashfall-button-primary rounded-md px-4 py-2 text-sm font-medium text-[color:var(--text-0)]"
-              >
-                See seasons
-              </Link>
-            </div>
           </div>
 
           <OrnamentDivider className="mt-10 opacity-70" />

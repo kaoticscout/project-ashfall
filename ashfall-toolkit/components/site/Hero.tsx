@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { OrnamentDivider } from "@/components/site/OrnamentDivider";
+import { withBasePath } from "@/lib/withBasePath";
 
 export function Hero(props: {
   eyebrow?: string;
@@ -14,10 +15,11 @@ export function Hero(props: {
   align?: "left" | "center";
   vertical?: "top" | "lower";
 }) {
-  const bg =
-    props.background === "world"
-      ? "bg-[url('/assets/hero-world.svg')] bg-cover bg-center"
-      : "";
+  const isWorld = props.background === "world";
+  const bg = isWorld ? "bg-cover bg-center" : "";
+  const bgStyle = isWorld
+    ? { backgroundImage: `url("${withBasePath("/assets/hero-world.svg")}")` }
+    : undefined;
 
   // Keep the homepage hero spacing explicit (px-based) so we can precisely
   // choreograph "gradient → title → black buffer → next section".
@@ -59,7 +61,10 @@ export function Hero(props: {
       : "";
 
   return (
-    <section className={`relative overflow-hidden ${bg} ${sectionSizing}`}>
+    <section
+      className={`relative overflow-hidden ${bg} ${sectionSizing}`}
+      style={bgStyle}
+    >
       <div className="absolute inset-0">
         {props.backgroundVideoSrc ? (
           <video
@@ -72,7 +77,7 @@ export function Hero(props: {
             preload="metadata"
             aria-hidden="true"
           >
-            <source src={props.backgroundVideoSrc} type="video/mp4" />
+            <source src={withBasePath(props.backgroundVideoSrc)} type="video/mp4" />
           </video>
         ) : null}
         <div className="ashfall-bg-noise absolute inset-0" />

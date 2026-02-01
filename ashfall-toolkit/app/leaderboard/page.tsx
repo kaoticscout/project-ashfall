@@ -11,20 +11,7 @@ export default function LeaderboardPage() {
         subtitle="MVP, top squads, and top players—who owned the shard when it mattered."
         background="world"
       >
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href="/seasons"
-            className="ashfall-button-primary rounded-md px-4 py-2 text-sm font-medium text-[color:var(--text-0)]"
-          >
-            Back to seasons
-          </Link>
-          <Link
-            href="/"
-            className="ashfall-button-secondary rounded-md px-4 py-2 text-sm font-medium text-[color:var(--text-1)] hover:text-[color:var(--text-0)]"
-          >
-            ← Home
-          </Link>
-        </div>
+
       </Hero>
 
       <section className="relative overflow-hidden py-12 sm:py-16">
@@ -40,6 +27,16 @@ export default function LeaderboardPage() {
             </div>
             <div className="text-xs tracking-[0.32em] text-[color:var(--text-2)]">
               MVP • TOP SQUADS • TOP PLAYERS
+            </div>
+          </div>
+
+          <div className="relative mt-4 flex flex-wrap items-center gap-3 overflow-hidden rounded-2xl border border-[color:color-mix(in_oklab,var(--accent-arcane)_28%,var(--border-subtle))] bg-[color:color-mix(in_oklab,var(--accent-arcane)_16%,transparent)] px-4 py-3">
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[color:color-mix(in_oklab,var(--accent-arcane)_24%,transparent)] via-transparent to-[color:color-mix(in_oklab,var(--accent-gold)_10%,transparent)]" />
+            <span className="relative rounded-full border border-[color:color-mix(in_oklab,var(--accent-arcane)_34%,var(--border-subtle))] bg-[color:color-mix(in_oklab,var(--accent-arcane)_24%,transparent)] px-3 py-1 text-[10px] font-extrabold tracking-[0.22em] text-[color:var(--text-0)]">
+              WIP
+            </span>
+            <div className="relative text-sm text-[color:var(--text-0)]">
+              Placeholder content while we prototype weekly rankings and end-of-week rewards.
             </div>
           </div>
 

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { withBasePath } from "@/lib/withBasePath";
 
 export type ZoneCardData = {
   name: string;
@@ -30,7 +31,7 @@ export function ZoneShowcase(props: { title: string; zones: ZoneCardData[] }) {
             >
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[color:color-mix(in_oklab,var(--bg-0)_85%,transparent)]" />
               <Image
-                src={z.imageSrc}
+                src={withBasePath(z.imageSrc)}
                 alt={z.name}
                 width={640}
                 height={360}

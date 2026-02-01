@@ -4,14 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 
-const betaSignupHref =
-  "mailto:beta@ashfall.game?subject=Ashfall%20Beta%20Signup&body=I%27d%20like%20to%20sign%20up%20for%20the%20Ashfall%20beta.%0A%0AName%3A%0AEmail%3A%0ARegion%3A%0APlatform%3A%20PC%0A%0APlaystyle%3A%20Solo%20%2F%20Duo%20%2F%20Squad";
-
 const navItems = [
   { href: "/game", label: "The Game" },
-  { href: "/map", label: "World Map" },
   { href: "/classes", label: "Classes" },
-  { href: "/leaderboard", label: "Leaderboard" },
+  { href: "/map", label: "World Map" },
+  { href: "/leaderboard", label: "Leaderboard", note: "WIP" },
 ] as const;
 
 export function Nav() {
@@ -59,7 +56,14 @@ export function Nav() {
                       : "text-[color:var(--text-1)] hover:bg-[color:color-mix(in_oklab,var(--bg-2)_55%,transparent)] hover:text-[color:var(--text-0)]"
                   }`}
                 >
-                  {item.label}
+                  <span className="inline-flex items-center gap-2">
+                    <span>{item.label}</span>
+                    {"note" in item ? (
+                      <span className="rounded-full border border-[color:color-mix(in_oklab,var(--accent-arcane)_34%,var(--border-subtle))] bg-[color:color-mix(in_oklab,var(--accent-arcane)_18%,transparent)] px-2 py-[2px] text-[10px] font-extrabold tracking-[0.22em] text-[color:var(--text-0)]">
+                        {item.note}
+                      </span>
+                    ) : null}
+                  </span>
                 </Link>
               );
             })}
@@ -75,12 +79,14 @@ export function Nav() {
             >
               Menu
             </button>
-            <a
-              href={betaSignupHref}
-              className="ashfall-button-primary rounded-lg px-5 py-3 text-base font-extrabold leading-none tracking-[0.14em] text-[color:var(--text-0)]"
+            <button
+              type="button"
+              disabled
+              aria-disabled="true"
+              className="ashfall-button-primary rounded-lg px-5 py-3 text-base font-extrabold leading-none tracking-[0.14em] text-[color:var(--text-0)] opacity-60 cursor-not-allowed"
             >
-              Beta signup
-            </a>
+              Signup closed
+            </button>
           </div>
         </div>
       </div>
@@ -109,17 +115,25 @@ export function Nav() {
                           : "border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-1)_55%,transparent)] text-[color:var(--text-1)] hover:border-[color:var(--border-accent)] hover:text-[color:var(--text-0)]"
                       }`}
                     >
-                      {item.label}
+                      <span className="flex items-center justify-between gap-3">
+                        <span>{item.label}</span>
+                        {"note" in item ? (
+                          <span className="shrink-0 rounded-full border border-[color:color-mix(in_oklab,var(--accent-arcane)_34%,var(--border-subtle))] bg-[color:color-mix(in_oklab,var(--accent-arcane)_18%,transparent)] px-2 py-[2px] text-[10px] font-extrabold tracking-[0.22em] text-[color:var(--text-0)]">
+                            {item.note}
+                          </span>
+                        ) : null}
+                      </span>
                     </Link>
                   );
                 })}
-                <a
-                  href={betaSignupHref}
-                  className="ashfall-button-cta mt-2 inline-flex items-center justify-center rounded-xl px-6 py-4 text-center text-sm font-extrabold tracking-[0.18em]"
-                  onClick={close}
+                <button
+                  type="button"
+                  disabled
+                  aria-disabled="true"
+                  className="ashfall-button-cta mt-2 inline-flex items-center justify-center rounded-xl px-6 py-4 text-center text-sm font-extrabold tracking-[0.18em] opacity-60 cursor-not-allowed"
                 >
-                  SIGN UP FOR BETA
-                </a>
+                  SIGNUP CLOSED
+                </button>
               </div>
             </div>
           </div>

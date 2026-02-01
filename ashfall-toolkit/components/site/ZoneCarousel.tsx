@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useMemo, useState } from "react";
+import { withBasePath } from "@/lib/withBasePath";
 
 type Zone = {
   id: string;
@@ -169,7 +170,7 @@ export function ZoneCarousel(props: ZoneCarouselProps) {
             <div className="relative aspect-[16/9] w-full">
               <Image
                 key={current?.id ?? toTitle(String(active))}
-                src={current?.imageSrc ?? zones[0]!.imageSrc}
+                src={withBasePath(current?.imageSrc ?? zones[0]!.imageSrc)}
                 alt={current?.name ?? "Zone art"}
                 fill
                 priority={active === 0}

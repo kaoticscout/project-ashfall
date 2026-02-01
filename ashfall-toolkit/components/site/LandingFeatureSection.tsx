@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
+import { withBasePath } from "@/lib/withBasePath";
 
 export function LandingFeatureSection(props: {
   eyebrow: string;
@@ -16,7 +17,7 @@ export function LandingFeatureSection(props: {
       <div className="relative overflow-hidden rounded-2xl border border-[color:var(--border-subtle)] bg-[color:var(--bg-2)]">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[color:color-mix(in_oklab,var(--bg-0)_85%,transparent)]" />
         <Image
-          src={props.imageSrc}
+          src={withBasePath(props.imageSrc)}
           alt={props.imageAlt}
           width={960}
           height={540}

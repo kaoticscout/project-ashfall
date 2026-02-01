@@ -8,6 +8,7 @@ export type HeroArchetype = {
   kit: { name: string; type: string; summary: string }[];
   isNewest?: boolean;
   portraitSrc?: string; // optional marketing portrait art (toolkit website)
+  portraitFocus?: "center" | "top"; // image focal point for cropping
 };
 
 export const HERO_ARCHETYPES: HeroArchetype[] = [
@@ -21,6 +22,7 @@ export const HERO_ARCHETYPES: HeroArchetype[] = [
     tags: ["Control", "Ritual", "Teamfight"],
     isNewest: true,
     portraitSrc: "/assets/Classes/void-wizard.jpg",
+    portraitFocus: "top",
     kit: [
       {
         name: "Void Sigil",
@@ -48,6 +50,7 @@ export const HERO_ARCHETYPES: HeroArchetype[] = [
       "The Warlord creates tempo spikes for elite clears and contested events. Their identity is about leading pushes, stabilizing lines, and turning skirmishes into decisive wins.",
     tags: ["Assault", "Leadership", "Teamfight"],
     portraitSrc: "/assets/Classes/gladiator.jpg",
+    portraitFocus: "top",
     kit: [
       { name: "Rally Cry", type: "Ultimate", summary: "Burst morale + unit haste." },
       { name: "Shield Break", type: "Core", summary: "Punish frontliners and crack guards." },
@@ -63,6 +66,7 @@ export const HERO_ARCHETYPES: HeroArchetype[] = [
       "The Architect makes the homestead feel valuable without making it mandatory: comfort buffs, crafting throughput, and preparation that helps your next run feel stronger.",
     tags: ["Crafting", "Homestead", "Tempo"],
     portraitSrc: "/assets/Classes/engineer.jpg",
+    portraitFocus: "top",
     kit: [
       { name: "Rapid Build", type: "Core", summary: "Fast placement + repair burst." },
       {
@@ -85,6 +89,8 @@ export const HERO_ARCHETYPES: HeroArchetype[] = [
     overview:
       "The Hunter is built for Rust-style clips: ambushes, last-second escapes, and high-stakes loot runs. They convert information into fights they choose.",
     tags: ["Mobility", "Ambush", "Information"],
+    portraitSrc: "/assets/Classes/hunter.jpg",
+    portraitFocus: "top",
     kit: [
       { name: "Mark Prey", type: "Core", summary: "Track enemies and reveal trails." },
       { name: "Shadow Step", type: "Mobility", summary: "Blink to reposition." },
@@ -99,6 +105,8 @@ export const HERO_ARCHETYPES: HeroArchetype[] = [
     overview:
       "The Warden specializes in holding space: protecting allies, stabilizing fights, and turning pushes into costly failures for attackers.",
     tags: ["Defense", "Frontline", "Protection"],
+    portraitSrc: "/assets/Classes/warden.jpg",
+    portraitFocus: "top",
     kit: [
       { name: "Bulwark Stance", type: "Core", summary: "Damage reduction + threat hold." },
       { name: "Ward Field", type: "Utility", summary: "Protect a small area and allies." },
@@ -113,6 +121,8 @@ export const HERO_ARCHETYPES: HeroArchetype[] = [
     overview:
       "The Mystic is a support-first archetype that enables spotlight moments: clutch saves, rally resets, and coordinated pushes with clear, readable utility.",
     tags: ["Support", "Control", "Utility"],
+    portraitSrc: "/assets/Classes/mystic.jpg",
+    portraitFocus: "top",
     kit: [
       { name: "Aegis Pulse", type: "Core", summary: "Shield allies in a short radius." },
       { name: "Cleanse", type: "Utility", summary: "Remove key debuffs and slow effects." },
@@ -127,6 +137,8 @@ export const HERO_ARCHETYPES: HeroArchetype[] = [
     overview:
       "The Raider is defined by breach moments. Their kit focuses on breaking lines and creating chaos long enough for a group to capitalize.",
     tags: ["Damage", "Disruption", "Chaos"],
+    portraitSrc: "/assets/Classes/raider.jpg",
+    portraitFocus: "top",
     kit: [
       { name: "Breach Charge", type: "Core", summary: "Explosive pressure on clustered foes." },
       { name: "Smoke Screen", type: "Utility", summary: "Break line-of-sight and reset." },
@@ -141,6 +153,8 @@ export const HERO_ARCHETYPES: HeroArchetype[] = [
     overview:
       "The Stalker is about infiltration and sabotage: scouting routes, disrupting pulls, and creating paranoia that changes how rivals move.",
     tags: ["Infiltration", "Sabotage", "Intel"],
+    portraitSrc: "/assets/Classes/stalker.jpg",
+    portraitFocus: "top",
     kit: [
       { name: "Silent Step", type: "Core", summary: "Stealth window for positioning." },
       { name: "Sapper Kit", type: "Utility", summary: "Disable a defense briefly." },
@@ -155,6 +169,8 @@ export const HERO_ARCHETYPES: HeroArchetype[] = [
     overview:
       "The Marshal is the escort archetype: protects caravans, organizes rallies, and makes contested hauling and rotations feel like an event.",
     tags: ["Escort", "Logistics", "Leadership"],
+    portraitSrc: "/assets/Classes/marshal.jpg",
+    portraitFocus: "top",
     kit: [
       { name: "Escort Orders", type: "Core", summary: "Buff nearby allies and units." },
       { name: "Signal Flare", type: "Utility", summary: "Call rally to a marked point." },

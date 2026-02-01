@@ -3,8 +3,6 @@ import { Hero } from "@/components/site/Hero";
 import { SiegeSpotlight } from "@/components/site/SiegeSpotlight";
 
 export default function Home() {
-  const betaSignupHref =
-    "mailto:beta@ashfall.game?subject=Ashfall%20Beta%20Signup&body=I%27d%20like%20to%20sign%20up%20for%20the%20Ashfall%20beta.%0A%0AName%3A%0AEmail%3A%0ARegion%3A%0APlatform%3A%20PC%0A%0APlaystyle%3A%20Solo%20%2F%20Duo%20%2F%20Squad";
   const betaSignupCount = 12438;
   const betaSignupCountLabel = betaSignupCount.toLocaleString();
   const heroVideoSrc = encodeURI(
@@ -25,12 +23,14 @@ export default function Home() {
       >
         <div className="mt-2 text-center">
           <div className="flex flex-wrap justify-center gap-3">
-            <a
-              href={betaSignupHref}
-              className="ashfall-button-cta inline-flex items-center justify-center rounded-xl px-8 py-5 text-center text-lg font-extrabold tracking-[0.18em] sm:px-10 sm:py-6 sm:text-xl"
+            <button
+              type="button"
+              disabled
+              aria-disabled="true"
+              className="ashfall-button-cta inline-flex items-center justify-center rounded-xl px-8 py-5 text-center text-lg font-extrabold tracking-[0.18em] opacity-60 cursor-not-allowed sm:px-10 sm:py-6 sm:text-xl"
             >
-              SIGN UP FOR BETA
-            </a>
+              SIGNUP CLOSED
+            </button>
             <Link
               href="/game"
               className="ashfall-button-secondary inline-flex items-center justify-center rounded-xl px-7 py-5 text-center text-base font-extrabold tracking-[0.14em] text-[color:var(--text-0)] hover:text-[color:var(--text-0)] sm:px-9 sm:py-6 sm:text-lg"
@@ -40,6 +40,14 @@ export default function Home() {
           </div>
           <div className="mt-6 text-sm font-bold tracking-[0.1em] text-[color:var(--text-0)]">
             {betaSignupCountLabel} raiders have answered the call
+          </div>
+          <div className="mx-auto mt-4 max-w-3xl text-pretty text-xs leading-relaxed text-[color:color-mix(in_oklab,var(--text-0)_78%,transparent)] sm:text-sm">
+            The footage above is a mood reel to inspire Ashfall’s tone and visuals—not gameplay.
+            For how the game actually plays, head to{" "}
+            <Link href="/game" className="underline underline-offset-4">
+              The Game
+            </Link>
+            .
           </div>
         </div>
       </Hero>

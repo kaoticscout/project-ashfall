@@ -6,6 +6,7 @@ import { SectionCard } from "@/components/site/SectionCard";
 import { AbilityToggle } from "@/components/site/AbilityToggle";
 import { getHeroById } from "@/lib/heroArchetypes";
 import { getHeroSpotlight, type StatBarRow } from "@/lib/heroSpotlights";
+import { withBasePath } from "@/lib/withBasePath";
 
 function StatBar(props: StatBarRow) {
   const clamped = Math.max(0, Math.min(5, props.value));
@@ -33,6 +34,9 @@ export function HeroSpotlightPage(props: { heroId: string }) {
   const hero = getHeroById(props.heroId);
   const spotlight = getHeroSpotlight(props.heroId);
   if (!hero || !spotlight) return null;
+
+  const focusClass =
+    hero.portraitFocus === "top" ? "object-top" : "object-center";
 
   return (
     <div>
@@ -64,16 +68,21 @@ export function HeroSpotlightPage(props: { heroId: string }) {
             {hero.portraitSrc ? (
               <div className="absolute inset-0">
                 <Image
-                  src={hero.portraitSrc}
+                  src={withBasePath(hero.portraitSrc)}
                   alt=""
                   fill
-                  className="object-cover opacity-[0.18]"
+                  className={`object-cover opacity-[0.18] ${focusClass}`}
                   sizes="(min-width: 1024px) 1320px, 100vw"
                   priority={false}
                 />
               </div>
             ) : (
-              <div className="absolute inset-0 bg-[url('/assets/feature-classes.svg')] bg-cover bg-center opacity-[0.14]" />
+              <div
+                className="absolute inset-0 bg-cover bg-center opacity-[0.14]"
+                style={{
+                  backgroundImage: `url("${withBasePath("/assets/feature-classes.svg")}")`,
+                }}
+              />
             )}
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[color:color-mix(in_oklab,var(--bg-0)_35%,transparent)] to-[color:var(--bg-0)]" />
 
@@ -108,11 +117,11 @@ export function HeroSpotlightPage(props: { heroId: string }) {
                       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[color:color-mix(in_oklab,var(--bg-0)_78%,transparent)]" />
                       <div className="relative aspect-[16/9] w-full">
                         <Image
-                          src={hero.portraitSrc}
+                          src={withBasePath(hero.portraitSrc)}
                           alt={`${hero.name} portrait`}
                           fill
                           sizes="(min-width: 1024px) 55vw, 100vw"
-                          className="object-cover opacity-95"
+                          className={`object-cover opacity-95 ${focusClass}`}
                           priority={false}
                         />
                       </div>

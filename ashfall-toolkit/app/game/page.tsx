@@ -3,9 +3,6 @@ import { Hero } from "@/components/site/Hero";
 import { OrnamentDivider } from "@/components/site/OrnamentDivider";
 import { ZoneCarousel } from "@/components/site/ZoneCarousel";
 
-const betaSignupHref =
-  "mailto:beta@ashfall.game?subject=Ashfall%20Beta%20Signup&body=I%27d%20like%20to%20sign%20up%20for%20the%20Ashfall%20beta.%0A%0AName%3A%0AEmail%3A%0ARegion%3A%0APlatform%3A%20PC%0A%0APlaystyle%3A%20Solo%20%2F%20Duo%20%2F%20Squad";
-
 export default function GamePage() {
   return (
     <div>
@@ -16,12 +13,14 @@ export default function GamePage() {
         background="world"
       >
         <div className="flex flex-wrap gap-3">
-          <a
-            href={betaSignupHref}
-            className="ashfall-button-cta inline-flex items-center justify-center rounded-xl px-7 py-4 text-center text-sm font-extrabold tracking-[0.18em] sm:px-8 sm:py-4 sm:text-base"
+          <button
+            type="button"
+            disabled
+            aria-disabled="true"
+            className="ashfall-button-cta inline-flex items-center justify-center rounded-xl px-7 py-4 text-center text-sm font-extrabold tracking-[0.18em] opacity-60 cursor-not-allowed sm:px-8 sm:py-4 sm:text-base"
           >
-            SIGN UP FOR BETA
-          </a>
+            SIGNUP CLOSED
+          </button>
           <Link
             href="/"
             className="ashfall-button-secondary rounded-md px-4 py-3 text-sm font-medium text-[color:var(--text-1)] hover:text-[color:var(--text-0)]"

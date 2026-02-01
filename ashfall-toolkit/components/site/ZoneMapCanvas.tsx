@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { withBasePath } from "@/lib/withBasePath";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { OrnamentDivider } from "@/components/site/OrnamentDivider";
 import { getZoneMap, type ZoneMapId, type MapMarker } from "@/lib/zoneMaps";
@@ -297,7 +298,7 @@ export function ZoneMapCanvas(props: Props) {
               >
                 <Image
                   alt={`${zone.name} map`}
-                  src={zone.imageSrc}
+                  src={withBasePath(zone.imageSrc)}
                   fill
                   priority
                   sizes="100vw"

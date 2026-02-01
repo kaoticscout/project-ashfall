@@ -2,6 +2,7 @@ import { Hero } from "@/components/site/Hero";
 import Link from "next/link";
 import { LandingFeatureSection } from "@/components/site/LandingFeatureSection";
 import { OrnamentDivider } from "@/components/site/OrnamentDivider";
+import { withBasePath } from "@/lib/withBasePath";
 
 export default function SeasonsPage() {
   return (
@@ -45,7 +46,12 @@ export default function SeasonsPage() {
           </p>
 
           <div className="relative mt-8 overflow-hidden rounded-3xl border border-[color:var(--border-subtle)] bg-[color:color-mix(in_oklab,var(--bg-1)_72%,transparent)]">
-            <div className="absolute inset-0 bg-[url('/assets/feature-seasons.svg')] bg-cover bg-center opacity-[0.18]" />
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-[0.18]"
+              style={{
+                backgroundImage: `url("${withBasePath("/assets/feature-seasons.svg")}")`,
+              }}
+            />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[color:color-mix(in_oklab,var(--bg-0)_35%,transparent)] to-[color:var(--bg-0)]" />
 
             <div className="relative p-6 sm:p-8">
