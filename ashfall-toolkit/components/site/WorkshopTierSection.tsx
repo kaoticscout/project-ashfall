@@ -3,11 +3,28 @@
 import { useMemo, useState } from "react";
 import type { Unlock, UnlockCategory, WorkshopTier } from "@/lib/buildingProgression";
 import { CATEGORY_ORDER } from "@/lib/buildingProgression";
+import type { TextureAtlasMeta, TextureAtlasSprite } from "@/components/site/TextureAtlasIcon";
+import { TextureAtlasIcon } from "@/components/site/TextureAtlasIcon";
+
+type TextureAtlas = {
+  meta: TextureAtlasMeta;
+  sprites: TextureAtlasSprite[];
+};
 
 type CategoryBlock = {
   category: UnlockCategory;
   items: Unlock[];
 };
+
+function rarityFrameColorForTier(tier: number) {
+  // MMO-style rarity palette:
+  // 1: Common (gray), 2: Uncommon (green), 3: Rare (blue), 4: Epic (pinkish purple), 5+: Legendary (orange)
+  if (tier <= 1) return "#9CA3AF";
+  if (tier === 2) return "#22C55E";
+  if (tier === 3) return "#3B82F6";
+  if (tier === 4) return "#C084FC";
+  return "#F97316";
+}
 
 function costKey(item: { item: string; qty: number }) {
   return `${item.qty}× ${item.item}`;
@@ -53,8 +70,24 @@ function CostPills(props: { label: string; costs: { item: string; qty: number }[
   );
 }
 
-export function WorkshopTierSection(props: { tier: WorkshopTier }) {
+export function WorkshopTierSection(props: {
+  tier: WorkshopTier;
+  atlas?: TextureAtlas;
+  atlasImageSrc?: string;
+}) {
   const blocks = useMemo(() => groupByCategory(props.tier), [props.tier]);
+  const frameColor = useMemo(() => rarityFrameColorForTier(props.tier.tier), [props.tier.tier]);
+  const spriteByName = useMemo(() => {
+    const atlas = props.atlas;
+    if (!atlas) return null;
+    const map = new Map<string, TextureAtlasSprite>();
+    for (const s of atlas.sprites) map.set(s.name, s);
+    return map;
+  }, [props.atlas]);
+
+  const atlasImageSrc =
+    props.atlasImageSrc ??
+    (props.atlas?.meta.image ? `/assets/Items/${props.atlas.meta.image}` : undefined);
 
   const defaultOpen = useMemo(() => {
     const s = new Set<UnlockCategory>();
@@ -200,22 +233,58 @@ export function WorkshopTierSection(props: { tier: WorkshopTier }) {
                           >
                             <div className="absolute inset-0 bg-gradient-to-br from-[color:color-mix(in_oklab,var(--accent-gold)_7%,transparent)] via-transparent to-transparent" />
                             <div className="relative p-4">
-                              <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
-                                <div>
-                                  <div className="ashfall-display text-lg text-[color:var(--text-0)]">
-                                    {u.name}
-                                  </div>
-                                  {u.notes ? (
-                                    <div className="mt-1 text-sm text-[color:var(--text-1)]">
-                                      {u.notes}
+                              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                                <div className="flex min-w-0 items-start gap-4">
+                                  {spriteByName && props.atlas && atlasImageSrc ? (
+                                    (() => {
+                                      const sprite = spriteByName.get(u.name);
+                                      return sprite ? (
+                                        <TextureAtlasIcon
+                                          atlasMeta={props.atlas.meta}
+                                          sprite={sprite}
+                                          imageSrc={atlasImageSrc}
+                                          renderSizePx={72}
+                                          frameColor={frameColor}
+                                          frameWidthPx={2}
+                                          glowPx={18}
+                                          className="h-[72px] w-[72px] shrink-0 rounded-2xl border border-[color:color-mix(in_oklab,var(--border-subtle)_85%,transparent)] bg-[color:color-mix(in_oklab,var(--bg-1)_70%,transparent)]"
+                                          title={u.name}
+                                        />
+                                      ) : (
+                                        <div
+                                          className="h-[72px] w-[72px] shrink-0 rounded-2xl border border-[color:color-mix(in_oklab,var(--border-subtle)_85%,transparent)] bg-[color:color-mix(in_oklab,var(--bg-1)_70%,transparent)]"
+                                          style={{
+                                            borderColor: `color-mix(in oklab, ${frameColor} 75%, var(--border-subtle))`,
+                                            boxShadow: `0 0 0 2px ${frameColor}, 0 0 18px 0 color-mix(in oklab, ${frameColor} 55%, transparent)`,
+                                          }}
+                                        />
+                                      );
+                                    })()
+                                  ) : (
+                                    <div
+                                      className="h-[72px] w-[72px] shrink-0 rounded-2xl border border-[color:color-mix(in_oklab,var(--border-subtle)_85%,transparent)] bg-[color:color-mix(in_oklab,var(--bg-1)_70%,transparent)]"
+                                      style={{
+                                        borderColor: `color-mix(in oklab, ${frameColor} 75%, var(--border-subtle))`,
+                                        boxShadow: `0 0 0 2px ${frameColor}, 0 0 18px 0 color-mix(in oklab, ${frameColor} 55%, transparent)`,
+                                      }}
+                                    />
+                                  )}
+                                  <div className="min-w-0">
+                                    <div className="ashfall-display text-lg text-[color:var(--text-0)]">
+                                      {u.name}
                                     </div>
-                                  ) : null}
+                                    {u.notes ? (
+                                      <div className="mt-1 text-sm text-[color:var(--text-1)]">
+                                        {u.notes}
+                                      </div>
+                                    ) : null}
+                                  </div>
                                 </div>
-                              </div>
 
-                              <div className="mt-3 space-y-2">
-                                <CostPills label="Unlock" costs={u.unlockCost} />
-                                <CostPills label="Build" costs={u.buildCost} />
+                                <div className="space-y-2 sm:min-w-[320px] sm:pl-4">
+                                  <CostPills label="Unlock" costs={u.unlockCost} />
+                                  <CostPills label="Build" costs={u.buildCost} />
+                                </div>
                               </div>
                             </div>
                           </div>

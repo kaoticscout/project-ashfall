@@ -11,20 +11,6 @@ export default function EventsPage() {
         subtitle="Stub page: world events, contested moments, and how weekly cadence creates climaxes."
         background="world"
       >
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href="/game"
-            className="ashfall-button-primary rounded-md px-4 py-3 text-sm font-medium text-[color:var(--text-0)]"
-          >
-            ← Back to The Game
-          </Link>
-          <Link
-            href="/"
-            className="ashfall-button-secondary rounded-md px-4 py-3 text-sm font-medium text-[color:var(--text-1)] hover:text-[color:var(--text-0)]"
-          >
-            Home
-          </Link>
-        </div>
       </Hero>
 
       <section className="pb-16 pt-10 sm:pt-14">
