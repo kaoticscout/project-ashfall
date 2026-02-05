@@ -1,4 +1,16 @@
-export type ZoneMapId = "bc07_zangarmarsh";
+export const ZONE_MAP_IDS = [
+  "emberwastes",
+  "ironwood",
+  "silvershade",
+  "voidreach",
+  "bc07_zangarmarsh",
+] as const;
+
+export type ZoneMapId = (typeof ZONE_MAP_IDS)[number];
+
+export function isZoneMapId(value: string): value is ZoneMapId {
+  return (ZONE_MAP_IDS as readonly string[]).includes(value);
+}
 
 export type MapMarkerType = "harvest" | "event" | "raidBoss" | "base";
 
@@ -49,6 +61,293 @@ export type ZoneMap = {
 };
 
 export const zoneMaps: Record<ZoneMapId, ZoneMap> = {
+  emberwastes: {
+    id: "emberwastes",
+    name: "Emberwastes",
+    imageSrc: "/assets/ZoneMaps/EmberWastes.png",
+    aspect: [3, 2],
+    markers: [
+      // Harvestables
+      { id: "harvest-ember-cinderstone-01", type: "harvest", name: "Cinderstone Vein", detail: "Ore", x: 52.0, y: 34.0 },
+      { id: "harvest-ember-cinderstone-02", type: "harvest", name: "Cinderstone Vein", detail: "Ore", x: 61.0, y: 46.0 },
+      { id: "harvest-ember-cinderstone-03", type: "harvest", name: "Cinderstone Vein", detail: "Ore", x: 44.0, y: 52.0 },
+      { id: "harvest-ember-ashwood-01", type: "harvest", name: "Ashwood Stands", detail: "Timber", x: 24.0, y: 58.0 },
+      { id: "harvest-ember-ashwood-02", type: "harvest", name: "Ashwood Stands", detail: "Timber", x: 32.0, y: 42.0 },
+      { id: "harvest-ember-sulfur-01", type: "harvest", name: "Sulfur Blooms", detail: "Explosives mats", x: 70.0, y: 60.0 },
+      { id: "harvest-ember-sulfur-02", type: "harvest", name: "Sulfur Blooms", detail: "Explosives mats", x: 58.0, y: 70.0 },
+      { id: "harvest-ember-glasssand-01", type: "harvest", name: "Glass‑sand Dunes", detail: "Optics mats", x: 16.0, y: 72.0 },
+      { id: "harvest-ember-glasssand-02", type: "harvest", name: "Glass‑sand Dunes", detail: "Optics mats", x: 38.0, y: 78.0 },
+
+      // Strongholds
+      { id: "poi-ember-cinder-bastion", type: "event", name: "Cinder Bastion", detail: "Stronghold • layered walls, ballista nests", areaRadius: 9.5, x: 48.0, y: 55.0 },
+      { id: "poi-ember-meltworks", type: "event", name: "The Meltworks", detail: "Stronghold • dense scrap + elites", areaRadius: 8.0, x: 30.0, y: 64.0 },
+      { id: "poi-ember-ashgate-pass", type: "event", name: "Ashgate Pass", detail: "Chokepoint • caravan lane", areaRadius: 7.5, x: 62.0, y: 28.0 },
+
+      // Events
+      { id: "event-ember-ash-squall-surge", type: "event", name: "Ash Squall Surge", detail: "Storm window • bonus nodes", areaRadius: 12.0, x: 56.0, y: 44.0 },
+      { id: "event-ember-salvage-convoy", type: "event", name: "Salvage Convoy", detail: "Escort/ambush • siege parts", areaRadius: 10.0, x: 40.0, y: 46.0 },
+      { id: "event-ember-breach-drill", type: "event", name: "Breach Drill", detail: "Timed objective • siege permit", areaRadius: 8.5, x: 68.0, y: 52.0 },
+
+      // Bosses
+      { id: "boss-ember-furnace-wyrm", type: "raidBoss", status: "inactive", name: "The Furnace Wyrm", detail: "World boss • collapsing cover", areaRadius: 13.5, x: 74.0, y: 42.0 },
+      { id: "boss-ember-castellan", type: "raidBoss", status: "inactive", name: "Bastion Castellan", detail: "Stronghold boss • shield phases", areaRadius: 10.0, x: 46.0, y: 56.0 },
+
+      // Player bases (sample placements)
+      {
+        id: "base-ember-01",
+        type: "base",
+        name: "Homestead",
+        detail: "2×2 core",
+        x: 36.0,
+        y: 72.0,
+        cells: [
+          { x: 0, y: 0 },
+          { x: 1, y: 0 },
+          { x: 0, y: 1 },
+          { x: 1, y: 1 },
+        ],
+      },
+      {
+        id: "base-ember-02",
+        type: "base",
+        name: "Homestead",
+        detail: "Courtyard (13 cells)",
+        x: 60.0,
+        y: 66.0,
+        cells: [
+          { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 },
+          { x: 0, y: 1 }, { x: 3, y: 1 },
+          { x: 0, y: 2 }, { x: 3, y: 2 },
+          { x: 0, y: 3 }, { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 },
+          { x: 1, y: 1 },
+        ],
+      },
+      {
+        id: "base-ember-03",
+        type: "base",
+        name: "Homestead",
+        detail: "L‑shape (12 cells)",
+        x: 26.0,
+        y: 52.0,
+        cells: [
+          { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 },
+          { x: 0, y: 1 },
+          { x: 0, y: 2 },
+          { x: 0, y: 3 },
+          { x: 1, y: 3 }, { x: 2, y: 3 },
+          { x: 1, y: 2 }, { x: 2, y: 2 },
+          { x: 1, y: 1 },
+        ],
+      },
+    ],
+  },
+  ironwood: {
+    id: "ironwood",
+    name: "Ironwood",
+    imageSrc: "/assets/ZoneMaps/Ironwood.png",
+    aspect: [3, 2],
+    markers: [
+      // Harvestables
+      { id: "harvest-iron-heartwood-01", type: "harvest", name: "Ironwood Heartwood", detail: "Timber", x: 18.0, y: 34.0 },
+      { id: "harvest-iron-heartwood-02", type: "harvest", name: "Ironwood Heartwood", detail: "Timber", x: 30.0, y: 44.0 },
+      { id: "harvest-iron-heartwood-03", type: "harvest", name: "Ironwood Heartwood", detail: "Timber", x: 42.0, y: 58.0 },
+      { id: "harvest-iron-fiber-01", type: "harvest", name: "Verdant Fiber", detail: "Fiber", x: 58.0, y: 52.0 },
+      { id: "harvest-iron-fiber-02", type: "harvest", name: "Verdant Fiber", detail: "Fiber", x: 64.0, y: 66.0 },
+      { id: "harvest-iron-sapstone-01", type: "harvest", name: "Sapstone", detail: "Adhesives", x: 72.0, y: 44.0 },
+      { id: "harvest-iron-shadowleaf-01", type: "harvest", name: "Shadowleaf Herbs", detail: "Potions", x: 52.0, y: 38.0 },
+      { id: "harvest-iron-shadowleaf-02", type: "harvest", name: "Shadowleaf Herbs", detail: "Potions", x: 36.0, y: 30.0 },
+
+      // Strongholds / POIs
+      { id: "poi-iron-rootgate", type: "event", name: "Rootgate Keep", detail: "Stronghold • vertical fights", areaRadius: 9.0, x: 22.0, y: 52.0 },
+      { id: "poi-iron-hollow-market", type: "event", name: "Hollow Market", detail: "POI • neutral-ish trading hub", areaRadius: 8.0, x: 50.0, y: 60.0 },
+      { id: "poi-iron-old-road", type: "event", name: "The Old Road", detail: "Lane • escorts & intercepts", areaRadius: 10.0, x: 66.0, y: 56.0 },
+
+      // Events
+      { id: "event-iron-stag-king", type: "event", name: "Hunt: The Stag‑King", detail: "Trackable roaming elite", areaRadius: 11.0, x: 34.0, y: 64.0 },
+      { id: "event-iron-timberfall", type: "event", name: "Timberfall", detail: "Mass harvesting window", areaRadius: 12.5, x: 62.0, y: 48.0 },
+      { id: "event-iron-wardstone", type: "event", name: "Wardstone Ritual", detail: "Hold circles • claim a zone buff", areaRadius: 9.5, x: 78.0, y: 38.0 },
+
+      // Bosses
+      { id: "boss-iron-briar-matron", type: "raidBoss", status: "inactive", name: "The Briar Matron", detail: "World boss • root snares + adds", areaRadius: 13.0, x: 84.0, y: 54.0 },
+      { id: "boss-iron-rootgate-warden", type: "raidBoss", status: "inactive", name: "Rootgate Warden", detail: "Stronghold boss • patrol callouts", areaRadius: 10.0, x: 24.0, y: 52.0 },
+
+      // Player bases (sample placements)
+      {
+        id: "base-iron-01",
+        type: "base",
+        name: "Homestead",
+        detail: "3×3 with hole (8 cells)",
+        x: 58.0,
+        y: 70.0,
+        cells: [
+          { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 },
+          { x: 0, y: 1 },               { x: 2, y: 1 },
+          { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 },
+        ],
+      },
+      {
+        id: "base-iron-02",
+        type: "base",
+        name: "Homestead",
+        detail: "6×3 camp (18 cells)",
+        x: 40.0,
+        y: 78.0,
+        cells: Array.from({ length: 18 }, (_, i) => ({ x: i % 6, y: Math.floor(i / 6) })),
+      },
+      {
+        id: "base-iron-03",
+        type: "base",
+        name: "Homestead",
+        detail: "4×3 with notch (11 cells)",
+        x: 34.0,
+        y: 56.0,
+        cells: [
+          { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 },
+          { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 3, y: 1 },
+          { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 },
+        ],
+      },
+    ],
+  },
+  silvershade: {
+    id: "silvershade",
+    name: "Silvershade",
+    imageSrc: "/assets/ZoneMaps/Silvershade.png",
+    aspect: [3, 2],
+    markers: [
+      // Harvestables
+      { id: "harvest-silver-slate-01", type: "harvest", name: "Silver‑slate", detail: "Armor trims", x: 18.0, y: 58.0 },
+      { id: "harvest-silver-slate-02", type: "harvest", name: "Silver‑slate", detail: "Armor trims", x: 34.0, y: 46.0 },
+      { id: "harvest-silver-moonreed-01", type: "harvest", name: "Moonreed", detail: "Arcane fiber", x: 56.0, y: 54.0 },
+      { id: "harvest-silver-moonreed-02", type: "harvest", name: "Moonreed", detail: "Arcane fiber", x: 62.0, y: 40.0 },
+      { id: "harvest-silver-river-ore-01", type: "harvest", name: "River‑ore", detail: "Weapon fittings", x: 48.0, y: 66.0 },
+      { id: "harvest-silver-lumen-01", type: "harvest", name: "Lumen Herbs", detail: "Cleanse + clarity", x: 74.0, y: 56.0 },
+      { id: "harvest-silver-lumen-02", type: "harvest", name: "Lumen Herbs", detail: "Cleanse + clarity", x: 66.0, y: 70.0 },
+
+      // Strongholds / POIs
+      { id: "poi-silver-abbey", type: "event", name: "Gloamspire Abbey", detail: "Stronghold • shrine rooms + puzzle doors", areaRadius: 10.5, x: 78.0, y: 34.0 },
+      { id: "poi-silver-bridge", type: "event", name: "The Silver Bridge", detail: "Landmark • prime siege fights", areaRadius: 9.0, x: 56.0, y: 58.0 },
+      { id: "poi-silver-wharf", type: "event", name: "Sable Wharf", detail: "Extraction hub • contested", areaRadius: 8.5, x: 40.0, y: 74.0 },
+
+      // Events
+      { id: "event-silver-procession", type: "event", name: "Relic Procession", detail: "Escort • relic shards", areaRadius: 11.0, x: 52.0, y: 60.0 },
+      { id: "event-silver-convergence", type: "event", name: "Moonlit Convergence", detail: "Ritual • rune holds", areaRadius: 12.0, x: 70.0, y: 52.0 },
+      { id: "event-silver-bell-toll", type: "event", name: "Abbey Bell Toll", detail: "Dungeon surge • bonus rooms", areaRadius: 9.0, x: 80.0, y: 36.0 },
+
+      // Bosses
+      { id: "boss-silver-pale-duchess", type: "raidBoss", status: "inactive", name: "The Pale Duchess", detail: "World boss • charm/fear telegraphs", areaRadius: 13.0, x: 26.0, y: 56.0 },
+      { id: "boss-silver-abbot", type: "raidBoss", status: "inactive", name: "Abbot of Gloamspire", detail: "Stronghold boss • phase switches", areaRadius: 10.0, x: 78.0, y: 34.0 },
+
+      // Player bases (sample placements)
+      {
+        id: "base-silver-01",
+        type: "base",
+        name: "Homestead",
+        detail: "2×5 outpost (10 cells)",
+        x: 46.0,
+        y: 82.0,
+        cells: Array.from({ length: 10 }, (_, i) => ({ x: i % 2, y: Math.floor(i / 2) })),
+      },
+      {
+        id: "base-silver-02",
+        type: "base",
+        name: "Homestead",
+        detail: "3×6 longhall (18 cells)",
+        x: 22.0,
+        y: 66.0,
+        cells: Array.from({ length: 18 }, (_, i) => ({ x: i % 3, y: Math.floor(i / 3) })),
+      },
+      {
+        id: "base-silver-03",
+        type: "base",
+        name: "Homestead",
+        detail: "2×2 core",
+        x: 64.0,
+        y: 70.0,
+        cells: [
+          { x: 0, y: 0 },
+          { x: 1, y: 0 },
+          { x: 0, y: 1 },
+          { x: 1, y: 1 },
+        ],
+      },
+    ],
+  },
+  voidreach: {
+    id: "voidreach",
+    name: "Voidreach",
+    imageSrc: "/assets/ZoneMaps/VoidReach.jpg",
+    aspect: [3, 2],
+    markers: [
+      // Harvestables
+      { id: "harvest-void-voidstone-01", type: "harvest", name: "Voidstone", detail: "High‑tier crafting", x: 22.0, y: 62.0 },
+      { id: "harvest-void-voidstone-02", type: "harvest", name: "Voidstone", detail: "High‑tier crafting", x: 36.0, y: 70.0 },
+      { id: "harvest-void-aether-01", type: "harvest", name: "Aether Thread", detail: "Mobility items", x: 54.0, y: 44.0 },
+      { id: "harvest-void-fracture-01", type: "harvest", name: "Fracture Crystal", detail: "Upgrade catalyst", x: 66.0, y: 58.0 },
+      { id: "harvest-void-fracture-02", type: "harvest", name: "Fracture Crystal", detail: "Upgrade catalyst", x: 44.0, y: 34.0 },
+      { id: "harvest-void-nullbloom-01", type: "harvest", name: "Nullbloom", detail: "Rare cleanse mats", x: 78.0, y: 50.0 },
+
+      // Strongholds / POIs
+      { id: "poi-void-riftworks", type: "event", name: "The Riftworks", detail: "Stronghold • puzzle gates + elites", areaRadius: 10.5, x: 58.0, y: 38.0 },
+      { id: "poi-void-obsidian-spire", type: "event", name: "Obsidian Spire", detail: "Stronghold • knockback hazards", areaRadius: 10.0, x: 78.0, y: 62.0 },
+      { id: "poi-void-causeway", type: "event", name: "The Shattered Causeway", detail: "Main lane • most contested", areaRadius: 12.0, x: 46.0, y: 58.0 },
+
+      // Events
+      { id: "event-void-rift-tide", type: "event", name: "Rift Tide", detail: "Safe lanes rotate", areaRadius: 14.0, x: 52.0, y: 52.0 },
+      { id: "event-void-echo-storm", type: "event", name: "Echo Storm", detail: "Hold objectives while debuffed", areaRadius: 12.5, x: 70.0, y: 46.0 },
+      { id: "event-void-gate-breach", type: "event", name: "Gate Breach", detail: "Open sealed doors • 20 min", areaRadius: 11.0, x: 60.0, y: 40.0 },
+
+      // Bosses
+      { id: "boss-void-null-titan", type: "raidBoss", status: "inactive", name: "The Null Titan", detail: "World raid boss • arena hazards + adds", areaRadius: 15.0, x: 62.0, y: 56.0 },
+      { id: "boss-void-spire-architect", type: "raidBoss", status: "inactive", name: "Spire Architect", detail: "Stronghold boss • geometry attacks", areaRadius: 11.0, x: 78.0, y: 62.0 },
+
+      // Player bases (sample placements)
+      {
+        id: "base-void-01",
+        type: "base",
+        name: "Homestead",
+        detail: "2×2 core",
+        x: 34.0,
+        y: 74.0,
+        cells: [
+          { x: 0, y: 0 },
+          { x: 1, y: 0 },
+          { x: 0, y: 1 },
+          { x: 1, y: 1 },
+        ],
+      },
+      {
+        id: "base-void-02",
+        type: "base",
+        name: "Homestead",
+        detail: "L‑shape (12 cells)",
+        x: 56.0,
+        y: 66.0,
+        cells: [
+          { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 },
+          { x: 0, y: 1 },
+          { x: 0, y: 2 },
+          { x: 0, y: 3 },
+          { x: 1, y: 3 }, { x: 2, y: 3 },
+          { x: 1, y: 2 }, { x: 2, y: 2 },
+          { x: 1, y: 1 },
+        ],
+      },
+      {
+        id: "base-void-03",
+        type: "base",
+        name: "Homestead",
+        detail: "3×3 with hole (8 cells)",
+        x: 70.0,
+        y: 74.0,
+        cells: [
+          { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 },
+          { x: 0, y: 1 },               { x: 2, y: 1 },
+          { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 },
+        ],
+      },
+    ],
+  },
   bc07_zangarmarsh: {
     id: "bc07_zangarmarsh",
     name: "Zangarmarsh",

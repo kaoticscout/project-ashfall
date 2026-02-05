@@ -6,7 +6,7 @@ import { getHeroById, HERO_ARCHETYPES } from "@/lib/heroArchetypes";
 import { withBasePath } from "@/lib/withBasePath";
 
 type PageProps = {
-  params: { classId: string };
+  params: Promise<{ classId: string }>;
 };
 
 export const dynamicParams = false;
@@ -15,8 +15,8 @@ export function generateStaticParams() {
   return HERO_ARCHETYPES.map((h) => ({ classId: h.id }));
 }
 
-export default function ClassDetailPage({ params }: PageProps) {
-  const { classId } = params;
+export default async function ClassDetailPage({ params }: PageProps) {
+  const { classId } = await params;
   const c = getHeroById(classId);
   if (!c) {
     // Static export should never hit this if IDs are correct,
